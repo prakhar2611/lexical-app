@@ -9,3 +9,45 @@ body {margin:0;overflow: hidden;}
   height: 100vh;
   
 }
+button {
+    all: unset;
+}
+
+.toolbarRoot {
+  display: flex;
+  padding: 10px;
+  width: 100%;
+  min-width: max-content;
+}
+
+.toolbarButton {
+  flex: 0 0 auto;
+  height: 25px;
+  padding: 0 5px;
+  border-radius: 4px;
+  display: inline-flex;
+  font-size: 13px;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.toolbarButton:focus {
+  position: relative;
+}
+
+.toolbarSeparator {
+  width: 1px;
+  background-color: var(--mauve6);
+  margin: 0 10px;
+}
+
+.toolbarButton {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: rgb(236, 21, 21);
+  cursor: pointer;
+}
+.toolbarButton:hover {
+  color: white;
+}

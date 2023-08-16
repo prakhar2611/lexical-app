@@ -1,13 +1,14 @@
 {
-  "name": "lexical-rich-text-example",
+  "name": "editor-mk1",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
-    "@lexical/react": "0.12.0",
+    "@lexical/react": "0.8.1",
     "antd": "^5.8.3",
-    "lexical": "0.12.0",
+    "glyf": "^0.2.0",
+    "lexical": "0.8.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-scripts": "5.0.1",
