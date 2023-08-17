@@ -15,7 +15,7 @@ export default function App() {
           <Button style={{'padding':'1.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Save" title="Hi">JAIMATADI OM</Button>
           <Button style={{'padding':'1.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Edit" title="OK">FUDDI FADO</Button>
         </div>
-        <div  style={{'flex':1,'background' : '#ffd','height':'100vh'}}> <Editor/>
+        <div  style={{'flex':1,'background' : '#ffd','height':'100vh'}}> 
         </div>
        
       </div>
