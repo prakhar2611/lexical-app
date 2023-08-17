@@ -10,6 +10,9 @@ import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import {OnChangePlugin} from '@lexical/react/LexicalOnChangePlugin';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
+import { useSelector, useDispatch } from 'react-redux'
+import { setcontent } from './Utils/Reducers/contentSlice';
+
 import { Button, Form, Input, Radio,Layout,message,Switch,Progress,Badge,Avatar,Statistic} from 'antd';
 
 const theme = {
@@ -22,7 +25,7 @@ const theme = {
 // desired, so you don't pay the cost for plugins until you
 // actually use them.
 function MyCustomAutoFocusPlugin() {
-  const [editor] = useLexicalComposerContext();
+  const [editor] = useLexicalComposerContet();
 
   useEffect(() => {
     // Focus the editor when the effect fires!
@@ -44,15 +47,18 @@ export function Editor() {
 
   
 
-  const loadContent = () => {
-    // 'empty' editor
-    const value = '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"sdfdsf","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"dfdfd","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"dasds","type":"text","version":1},{"type":"linebreak","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}';
+  // const loadContent = () => {
+  //   // 'empty' editor
+  //   const value = '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"sdfdsf","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"dfdfd","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"dasds","type":"text","version":1},{"type":"linebreak","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}';
   
-    return value;
-  }
-  
+  //   return value;
+  // }
+  const dispatch = useDispatch()  
   const [editorState, setEditorState] = useState();
+  const [content,setcontent] = useState(useSelector((state) => state.content.value));
+  const [ref, setref] = useState(0);
 
+ 
 
   //onchange fucntion
   function onChange(editorState) {
@@ -61,14 +67,14 @@ export function Editor() {
   }
 
   //loding initial state
-  const initialEditorState = loadContent();
+  // const initialEditorState = loadContent();
 
   //loading initial config
   const initialConfig = {
     namespace: 'MyEditor',
     theme,
     onError,
-    editorState :initialEditorState
+    editorState :content
   };
 
   //console.log(editorState)
@@ -81,7 +87,7 @@ export function Editor() {
   ErrorBoundary={LexicalErrorBoundary}
     />
       <HistoryPlugin />
-      <MyCustomAutoFocusPlugin />
+      <MyCustomAutoFocusPlugin updatecontent = {content}/>
       <OnChangePlugin onChange={onChange}/>
       {/* <Button label="Save" onChange={() => {
     if (editorStateRef.current) {
