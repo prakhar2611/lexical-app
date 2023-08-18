@@ -4,6 +4,7 @@ import {useEffect,useState} from 'react';
 import {LexicalComposer} from '@lexical/react/LexicalComposer';
 import {PlainTextPlugin} from '@lexical/react/LexicalPlainTextPlugin';
 import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
+import {LexicalEditorRefPlugin} from '@lexical/react/LexicalEditorRefPlugin';
 
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
 import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
@@ -14,6 +15,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setcontent } from './Utils/Reducers/contentSlice';
 
 import { Button, Form, Input, Radio,Layout,message,Switch,Progress,Badge,Avatar,Statistic} from 'antd';
+import RefreshContentPlugin from './plugins/RefreshContentPlugin';
+import { saveFile } from './FileList';
 
 const theme = {
   // Theme styling goes here
@@ -25,7 +28,7 @@ const theme = {
 // desired, so you don't pay the cost for plugins until you
 // actually use them.
 function MyCustomAutoFocusPlugin() {
-  const [editor] = useLexicalComposerContet();
+  const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
     // Focus the editor when the effect fires!
@@ -42,8 +45,15 @@ function onError(error) {
   console.error(error);
 }
 
+// export function setEditorContent () {
+//   const [editor] = useLexicalComposerContext()
+//   useEffect(()=>{
+//     editor.setEditorState(info.node.meta);
+//   },[])
+// }
 
-export function Editor() {
+
+export function Editor({content,title}) {
 
   
 
@@ -54,17 +64,26 @@ export function Editor() {
   //   return value;
   // }
   const dispatch = useDispatch()  
-  const [editorState, setEditorState] = useState();
-  const [content,setcontent] = useState(useSelector((state) => state.content.value));
+  // const [editorState, setEditorState] = useState();
+  const [saveContent, setsaveContent] = useState();
   const [ref, setref] = useState(0);
+  const [currtitle,setcurrTitle] =useState('')
 
  
 
   //onchange fucntion
   function onChange(editorState) {
     const editorStateJSON = editorState.toJSON();
-    setEditorState(JSON.stringify(editorStateJSON));
+    setsaveContent(JSON.stringify(editorStateJSON));
   }
+
+
+   //save fucntion
+   function onSave() {
+    console.log("save content =====> ",  saveContent)
+    saveFile(saveContent,currtitle)
+  }
+
 
   //loding initial state
   // const initialEditorState = loadContent();
@@ -81,6 +100,9 @@ export function Editor() {
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
+
+<Input value={currtitle} disabled={false} onChange={(e)=>setcurrTitle(e.target.value)} placeholder="input placeholder" />
+      <Button label="Save" onClick={onSave} > Save </Button>
      <RichTextPlugin
   contentEditable={<ContentEditable />}
   placeholder={<div>Enter some text...</div>}
@@ -89,11 +111,9 @@ export function Editor() {
       <HistoryPlugin />
       <MyCustomAutoFocusPlugin updatecontent = {content}/>
       <OnChangePlugin onChange={onChange}/>
-      {/* <Button label="Save" onChange={() => {
-    if (editorStateRef.current) {
-      console.log(JSON.stringify(editorStateRef.current))
-    }
-  }} /> */}
+      {/* <LexicalEditorRefPlugin editorRef={ref} /> */}
+      <RefreshContentPlugin newState={content} />
+     
     </LexicalComposer>
   );
 }

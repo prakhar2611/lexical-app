@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export const contentSlice = createSlice({
-  name: 'content',
+  name: 'currcontent',
   initialState: {
     value: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"sdfdsf","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"this is initial state of editor editor","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"dasds","type":"text","version":1},{"type":"linebreak","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
   },
@@ -12,9 +12,9 @@ export const contentSlice = createSlice({
   //   finished: (state, action) => {
   //     state.value = falses
   //   },
-    setcontent: (state, action) => {
+    setSave: (state, action) => {
       state.value = action.payload
-      console.log("on click change state ======" ,state.value)
+      console.log("on save to db state ======" ,state.value)
     },
   },
 })

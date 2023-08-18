@@ -8,29 +8,50 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setcontent } from './Utils/Reducers/contentSlice';
 import {Editor} from "./Editor";
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import { setCurrPage } from './Utils/Reducers/pageSlice';
 
+// import { EditorProvider } from './Editor/EditorProvider'
 
+export  function saveFile(payload,title) {
+  const saveFileRequest = {
+    "metaData" : payload,
+    "title" : title
+  }
 
+  console.log("save file payload :", saveFileRequest)
+  axios.post(`http://localhost:9005/docs/api/v1/save?new=true`,JSON.stringify(saveFileRequest),{
+    headers: {           
+        'Content-Type': 'application/json',
+    },
+  })
+    .then(response => { if (response.status == 200 ){
+                // return (response.data)
+      }
+    }).catch(error => console.error(error));
+}
 
 
 export function FileList () {
 
+  
   const[data,setdata] = useState();
   const content_meta = useSelector((state) => state.content.value)
-  const [editor] = useLexicalComposerContext();
+  const page_meta = useSelector((state) => state.page.value)
 
+  //const[c,setc] = useState(content_meta)
 
   const dispatch = useDispatch()
 
   const onSelect = (selectedKeys, info) => {
     const value =''
-    // console.log('selected', selectedKeys,     info.node.meta );
+    console.log('selected', selectedKeys,     info );
     // const initialEditorState = editor.parseEditorState(value)
     // editor.setEditorState(info.node.meta)
+    dispatch(setCurrPage(info.node))
     dispatch(setcontent(info.node.meta))
+    
+    //setc(info.node.meta)
     // Enumerable.from(data).where((x)=> {return selectedKeys[0]==x.})
-    console.log(content_meta)
-
   };
 
   
@@ -81,7 +102,8 @@ function getlist() {
     defaultExpandedKeys={['0-0-0']}
     onSelect={onSelect}
     treeData={data}
-  />     <Editor  />
+  />  
+  {/* <Editor content={c}/>  */}
     </div>
     
   );

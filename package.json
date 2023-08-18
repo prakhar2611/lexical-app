@@ -15,6 +15,7 @@
     "react-dom": "18.1.0",
     "react-redux": "^8.1.2",
     "react-scripts": "5.0.1",
+    "utility-types": "^3.10.0",
     "web-vitals": "^3.4.0"
   },
   "devDependencies": {
