@@ -158,19 +158,19 @@ const plchldr = currentdate.getDate() + "-"
                 + (currentdate.getMonth()+1)  + "-" 
                 + currentdate.getFullYear() + " @ "  
                 + currentdate.getHours() + ":"  
-                + currentdate.getMinutes()  + " |" 
+                + currentdate.getMinutes()  + " | " 
                 + " Enter a title for this record"
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <div style={{'border':'1px dashed red','display':'flex','flexDirection':'column','padding':'1rem','justifyContent':'space-between'}}>
+      <div style={{'display':'flex','flexDirection':'column','padding':'1rem','justifyContent':'space-between'}}>
       <div style={{'padding':'.2rem','border':'2px solid black','display':'flex','justifyContent':'space-around','flexDirection':'column','gap':'.2rem'}}> 
             {/* <Button style={{'padding':'.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Save" title="Hi">CREATE</Button>
             <Button style={{'padding':'.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Edit" title="OK">SAVE</Button> */}
           
-            <div style={{'border':'1px solid orange','backgroundColor':'rbg(200,0,240)','display':'flex','flexDirection':'row','padding':'1rem','justifyContent':'space-between','gap':20}}>
-            <div style={{'border':'1px solid red','width':'40vw','font-size':'18px'}} >{title}</div>
-            <Button style={{'border':'1px solid red','width':'10vw'}} label="Save" onClick={onSave} > Save </Button>
+            <div style={{'backgroundColor':'salmon','display':'flex','flexDirection':'row','padding':'1rem','justifyContent':'space-between','gap':20}}>
+            <div style={{'width':'40vw','font-size':'18px'}} >{title}</div>
+            <Button style={{'width':'10vw'}} label="Save" onClick={onSave} > Save </Button>
           </div>
           <Input disabled={false} onChange={(e)=>setcurrTitle(e.target.value)} placeholder={plchldr} />
           </div>
@@ -179,13 +179,13 @@ const plchldr = currentdate.getDate() + "-"
           <Input disabled={false} onChange={(e)=>setcurrTitle(e.target.value)} placeholder="input placeholder" />
           <Button label="Save" onClick={onSave} > Save </Button>
         </div> */}
-        <div className="mytoolbar" style={{'border':'2px solid #96f','display':'flex','flexDirection':'row','padding':'1rem','justifyContent':'left','gap':10}}>
+        <div className="mytoolbar" style={{'display':'flex','flexDirection':'row','padding':'1rem','justifyContent':'left','gap':10}}>
           <HeadingToolbarPlugin/>
         </div>   
         
-            <RichTextPlugin 
+            <RichTextPlugin
               contentEditable={<ContentEditable />}
-              // placeholder={<div>Enter some text...</div>}
+              placeholder={<div>Enter some text...</div>}
               ErrorBoundary={LexicalErrorBoundary}
             />
             </div>
