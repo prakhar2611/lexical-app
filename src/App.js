@@ -1,13 +1,14 @@
 import "./App.css";
 import {Editor} from "./Editor";
 import { FileList } from "./FileList";
+import { Button, Form, Input, Radio,Layout,message,Switch,Progress,Badge,Avatar,Statistic} from 'antd';
+
+
+
 import { useSelector, useDispatch } from 'react-redux'
-
 import { setcontent } from './Utils/Reducers/contentSlice';
-
 import {useEffect,useState} from 'react';
 
-import { Button, Form, Input, Radio,Layout,message,Switch,Progress,Badge,Avatar,Statistic} from 'antd';
 // import { LexicalEditor } from "./Editor/Editor";
   
 export default function App() {
@@ -17,22 +18,27 @@ export default function App() {
   const title = useSelector((state)=>state.page.value['title']);
 
   return (
-    <div className="layout">
-      <div style={{'background' : 'none','width':'30%', 'flexShrink':1 }}>
-      <FileList/>
-      </div>
-      <div style={{'background' : 'none', 'flex': 1,'display':'flex','flexDirection':'column','justifyContent':'space-around'}}>
-       
-        {/* <div style={{'display':'flex','justifyContent':'space-between'}}> 
-          <Button style={{'padding':'1.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Save" title="Hi">Save</Button>
-          <Button style={{'padding':'1.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Edit" title="OK">Edit</Button>
-        </div> */}
-        <div  style={{'flex':1,'background' : '#ffd','height':'100vh'}}> 
-       <Editor content={content} title={title}/> 
+    <div style={{
+      'border':'2px dashed #3a6',
+      'padding':'1rem', 'margin':'1rem 2rem 2rem 1rem','background' : '#aca','overflow':'hidden'}}>
+      <div className="layout" style={{
+      'border':'1.5px dashed #f3c',}}>
+      <div style={{ 'border':'1px dashed #96f','background' : 'none','height':'20%','width':'20%', 'flexShrink':1 }}>
+        <FileList/>
         </div>
-       
-      </div>
+        {/* <div   style={{'flex':2,'background' : '#aaa','overflow':'hidden'}} > */}
+          {/* <div style={{'display':'flex','justifyContent':'space-between'}}> 
+            <Button style={{'padding':'1.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Save" title="Hi">Save</Button>
+            <Button style={{'padding':'1.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Edit" title="OK">Edit</Button>
+          </div> */}
+          {/* not visible this div */}
+          <div  style={{'border':'1px dashed #red','flex':4,'background' : '#ffd',}}> 
+          <Editor content={content} title={title}/> 
+          </div>
+        
+        {/* </div> */}
 
+      </div>
     </div>
 
     

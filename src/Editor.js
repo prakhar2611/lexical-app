@@ -1,11 +1,25 @@
+// import {PlainTextPlugin} from '@lexical/react/LexicalPlainTextPlugin';
 import {$getRoot, $getSelection} from 'lexical';
+import './styles.css';
+import { $isRangeSelection, type TextFormatType } from 'lexical';
+import { $setBlocksType } from '@lexical/selection';
+import { HeadingNode, QuoteNode } from '@lexical/rich-text';
+import { $createHeadingNode} from '@lexical/rich-text';
+import {
+  $isParentElementRTL,
+  $wrapLeafNodesInElements,
+  $isAtNodeEnd
+} from "@lexical/selection";
+
+// import { INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND ,ListNode,ListItemNode} from '@lexical/list';
+
 import {useEffect,useState} from 'react';
 
 import {LexicalComposer} from '@lexical/react/LexicalComposer';
-import {PlainTextPlugin} from '@lexical/react/LexicalPlainTextPlugin';
 import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
-import {LexicalEditorRefPlugin} from '@lexical/react/LexicalEditorRefPlugin';
 
+
+import {LexicalEditorRefPlugin} from '@lexical/react/LexicalEditorRefPlugin';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
 import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import {OnChangePlugin} from '@lexical/react/LexicalOnChangePlugin';
@@ -19,10 +33,39 @@ import RefreshContentPlugin from './plugins/RefreshContentPlugin';
 import { saveFile } from './FileList';
 
 const theme = {
-  // Theme styling goes here
-  
-}
+  heading: {
+    h1: 'glyf-editor-h1',
+    h2: 'glyf-editor-h2',
+    h3: 'glyf-editor-h3'
+  },
+  text: {
+    bold: 'glyf-editor-bold',
+    italic: 'glyf-editor-italic',
+    underline: 'glyf-editor-underline',
+    strikethrough: 'glyf-editor-strikethrough',
+    underlineStrikethrough: 'glyf-editor-underlineStrikethrough'
+  },
+  banner: 'glyf-editor-banner'
+};
 
+function HeadingToolbarPlugin() {
+  const [editor] = useLexicalComposerContext();
+  // const headingTags = ['h1', 'h2', 'h3'];
+  
+  const onClick = () => {
+    editor.update(() => {
+      // const root = $getRoot();
+      const selection= $getSelection();
+      if ($isRangeSelection(selection)){
+        $setBlocksType(selection,()=>$createHeadingNode('h1'))
+      }
+      console.log('rooot',root)
+      // root.append($createHeadingNode('h1').append($createTextNode('BIG HEADING MF')))
+    });
+
+  };
+  return <Button onClick={onClick}>BIG HEADING</Button>
+}
 // Lexical React plugins are React components, which makes them
 // highly composable. Furthermore, you can lazy load plugins if
 // desired, so you don't pay the cost for plugins until you
@@ -100,26 +143,58 @@ export function Editor({content,title}) {
   const initialConfig = {
     namespace: 'MyEditor',
     theme,
+    nodes:[HeadingNode,],
     onError,
     editorState :content
   };
+const currentdate = new Date(); 
+const datetime = "Last Sync: " + currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+const plchldr = currentdate.getDate() + "-"
+                + (currentdate.getMonth()+1)  + "-" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes()  + " |" 
+                + " Enter a title for this record"
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <h2>{title}</h2>
+      <div style={{'border':'1px dashed red','display':'flex','flexDirection':'column','padding':'1rem','justifyContent':'space-between'}}>
+      <div style={{'padding':'.2rem','border':'2px solid black','display':'flex','justifyContent':'space-around','flexDirection':'column','gap':'.2rem'}}> 
+            {/* <Button style={{'padding':'.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Save" title="Hi">CREATE</Button>
+            <Button style={{'padding':'.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Edit" title="OK">SAVE</Button> */}
+          
+            <div style={{'border':'1px solid orange','backgroundColor':'rbg(200,0,240)','display':'flex','flexDirection':'row','padding':'1rem','justifyContent':'space-between','gap':20}}>
+            <div style={{'border':'1px solid red','width':'40vw','font-size':'18px'}} >{title}</div>
+            <Button style={{'border':'1px solid red','width':'10vw'}} label="Save" onClick={onSave} > Save </Button>
+          </div>
+          <Input disabled={false} onChange={(e)=>setcurrTitle(e.target.value)} placeholder={plchldr} />
+          </div>
+        {/* <div>
+          <h2>{title}</h2>
+          <Input disabled={false} onChange={(e)=>setcurrTitle(e.target.value)} placeholder="input placeholder" />
+          <Button label="Save" onClick={onSave} > Save </Button>
+        </div> */}
+        <div className="mytoolbar" style={{'border':'2px solid #96f','display':'flex','flexDirection':'row','padding':'1rem','justifyContent':'left','gap':10}}>
+          <HeadingToolbarPlugin/>
+        </div>   
+        
+            <RichTextPlugin 
+              contentEditable={<ContentEditable />}
+              // placeholder={<div>Enter some text...</div>}
+              ErrorBoundary={LexicalErrorBoundary}
+            />
+            </div>
+      <HistoryPlugin />
       {/* {!iseditable&&<Button label="edit" onClick={setiseditable(true)} > Edit </Button>}
       {iseditable&&<Input disabled={false} onChange={(e)=>setcurrTitle(e.target.value)} placeholder="input placeholder" />}
       {iseditable&&<Button label="Save" onClick={onSave} > Save </Button>} */}
 
       {/* <Button label="edit" onClick={setiseditable(true)} > Edit </Button> */}
-     <Input disabled={false} onChange={(e)=>setcurrTitle(e.target.value)} placeholder="input placeholder" />
-     <Button label="Save" onClick={onSave} > Save </Button>
-     <RichTextPlugin
-      contentEditable={<ContentEditable />}
-      placeholder={<div>Enter some text...</div>}
-      ErrorBoundary={LexicalErrorBoundary}
-    />
-      <HistoryPlugin />
       {/* <MyCustomAutoFocusPlugin updatecontent = {content}/> */}
       {/* <OnChangePlugin onChange={onChange}/> */}
       {/* <LexicalEditorRefPlugin editorRef={ref} /> */}
