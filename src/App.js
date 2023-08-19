@@ -1,5 +1,5 @@
 import "./App.css";
-// import {Editor} from "./Editor";
+import {Editor} from "./Editor";
 // import {Editor} from "./Editor";
 import { GlyfEditor } from 'glyf';
 import { FileList } from "./FileList";
@@ -7,27 +7,31 @@ import { Button, Form, Input, Radio,Layout,message,Switch,Progress,Badge,Avatar,
 
 export default function App() {
   return (
+    <div style={{
+      'padding':'1rem', 'margin':'1rem 2rem 2rem 1rem','background' : '#aca','overflow':'hidden'}}>
     <div className="layout">
-      <div style={{'background' : 'none','width':'20%', 'flexShrink':1 }}>
+      <div style={{'background' : 'none','height':'20%','width':'20%', 'flexShrink':1 }}>
       <FileList/>
       </div>
-      <div style={{'background' : 'none', 'flex': 1,'display':'flex','flexDirection':'column','justifyContent':'space-around'}}>
+      <div   style={{'flex':2,'background' : '#aaa','overflow':'hidden'}} >
        
-        <div style={{'display':'flex','justifyContent':'space-between'}}> 
-          <Button style={{'padding':'1.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Save" title="Hi">JAIMATADI OM</Button>
-          <Button style={{'padding':'1.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Edit" title="OK">FUDDI FADO</Button>
+        
+        {/* <div  */}
+         {/* <ToolbarPlugin /> */}
+        <Editor autoFocus/>
+     
+        <div style={{'display':'flex','justifyContent':'right'}}> 
+          <Button style={{'padding':'.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Save" title="Hi">CREATE</Button>
+          <Button style={{'padding':'.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Edit" title="OK">SAVE</Button>
         </div>
-        <div 
-         style={{'display':'flex','flexDirection':'column','justifyContent':'center','flex':1,'background' : '#aaa','height':'80%','overflow':'hidden'}}> 
-        {/* <Editor/> */}
-        <GlyfEditor initialConfig={{ editable: false,}} />
-        <GlyfEditor />
-        </div>
+        {/* <GlyfEditor initialConfig={{ editable: false,}} /> */}
+        {/* <GlyfEditor /> */}
+        {/* </div> */}
        
       </div>
 
     </div>
 
-    
+    </div>
   );
 }
