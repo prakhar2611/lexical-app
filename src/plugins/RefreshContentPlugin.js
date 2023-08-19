@@ -7,7 +7,6 @@ import {useEffect,useState} from 'react';
 
 export default function RefreshContentPlugin({newState}) {
     // const [newState]  = seSelector((state) => state.content.value);
-    console.log("newstate = ",newState)
     const [editor] = useLexicalComposerContext()
     useEffect(() => {
       if (editor && newState) {

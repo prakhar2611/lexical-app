@@ -38,6 +38,7 @@ function MyCustomAutoFocusPlugin() {
   return null;
 }
 
+
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
 // try to recover gracefully without losing user data.
@@ -55,38 +56,45 @@ function onError(error) {
 
 export function Editor({content,title}) {
 
-  
-
-  // const loadContent = () => {
-  //   // 'empty' editor
-  //   const value = '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"sdfdsf","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"dfdfd","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"dasds","type":"text","version":1},{"type":"linebreak","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}';
-  
-  //   return value;
-  // }
   const dispatch = useDispatch()  
   // const [editorState, setEditorState] = useState();
   const [saveContent, setsaveContent] = useState();
+  const [iseditable , setiseditable] =useState(false);
   const [ref, setref] = useState(0);
   const [currtitle,setcurrTitle] =useState('')
 
  
-
-  //onchange fucntion
-  function onChange(editorState) {
-    const editorStateJSON = editorState.toJSON();
-    setsaveContent(JSON.stringify(editorStateJSON));
-  }
-
-
-   //save fucntion
+   //save it to db function
    function onSave() {
     console.log("save content =====> ",  saveContent)
     saveFile(saveContent,currtitle)
-  }
+    }
 
+    //listner to change
+    function OnChangeLivePlugin({onChange}) {
+      const [editor] = useLexicalComposerContext();
+      const dispatch = useDispatch();
+  
+      useEffect(() => {
+        return editor.registerUpdateListener((state) => {
+          onChange(state);
+        });
+      }, [editor,onChange]);
+    }
+
+    //onchange function
+    function onChange(state) {
+      //use the above when the above state passed is actually the whole state struct to use
+      // .to JSON() you need to go to editor state struct whoch has that fuction defined
+
+      const editorStateJSON = state.editorState.toJSON();
+      setsaveContent(JSON.stringify(editorStateJSON));
+    }
 
   //loding initial state
   // const initialEditorState = loadContent();
+
+
 
   //loading initial config
   const initialConfig = {
@@ -96,24 +104,27 @@ export function Editor({content,title}) {
     editorState :content
   };
 
-  //console.log(editorState)
-
   return (
     <LexicalComposer initialConfig={initialConfig}>
+      <h2>{title}</h2>
+      {/* {!iseditable&&<Button label="edit" onClick={setiseditable(true)} > Edit </Button>}
+      {iseditable&&<Input disabled={false} onChange={(e)=>setcurrTitle(e.target.value)} placeholder="input placeholder" />}
+      {iseditable&&<Button label="Save" onClick={onSave} > Save </Button>} */}
 
-<Input value={currtitle} disabled={false} onChange={(e)=>setcurrTitle(e.target.value)} placeholder="input placeholder" />
-      <Button label="Save" onClick={onSave} > Save </Button>
+      {/* <Button label="edit" onClick={setiseditable(true)} > Edit </Button> */}
+     <Input disabled={false} onChange={(e)=>setcurrTitle(e.target.value)} placeholder="input placeholder" />
+     <Button label="Save" onClick={onSave} > Save </Button>
      <RichTextPlugin
-  contentEditable={<ContentEditable />}
-  placeholder={<div>Enter some text...</div>}
-  ErrorBoundary={LexicalErrorBoundary}
+      contentEditable={<ContentEditable />}
+      placeholder={<div>Enter some text...</div>}
+      ErrorBoundary={LexicalErrorBoundary}
     />
       <HistoryPlugin />
-      <MyCustomAutoFocusPlugin updatecontent = {content}/>
-      <OnChangePlugin onChange={onChange}/>
+      {/* <MyCustomAutoFocusPlugin updatecontent = {content}/> */}
+      {/* <OnChangePlugin onChange={onChange}/> */}
       {/* <LexicalEditorRefPlugin editorRef={ref} /> */}
       <RefreshContentPlugin newState={content} />
-     
+      <OnChangeLivePlugin onChange={onChange}/>
     </LexicalComposer>
   );
 }

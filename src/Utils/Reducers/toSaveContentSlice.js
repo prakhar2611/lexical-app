@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const contentSlice = createSlice({
-  name: 'currcontent',
+export const toSaveContentSlice = createSlice({
+  name: 'tosavecontent',
   initialState: {
     value: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"sdfdsf","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"this is initial state of editor editor","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"dasds","type":"text","version":1},{"type":"linebreak","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
   },
@@ -20,6 +20,6 @@ export const contentSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setcontent } = contentSlice.actions
+export const { setSave } = toSaveContentSlice.actions
 
-export default contentSlice.reducer
+export default toSaveContentSlice.reducer

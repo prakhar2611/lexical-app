@@ -18,6 +18,10 @@ export const pageSlice = createSlice({
     // console.log("on click Page state =====> " ,state.value)
 
     },
+
+    // setCurrPageName: (state, action) => {
+    //   state.value.title = action.payload
+    // }
   },
 })
 
