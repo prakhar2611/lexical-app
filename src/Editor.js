@@ -9,6 +9,7 @@ import {LexicalComposer} from '@lexical/react/LexicalComposer';
 import {PlainTextPlugin} from '@lexical/react/LexicalPlainTextPlugin';
 import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
 import { $createHeadingNode} from '@lexical/rich-text';
+
 import { $setBlocksType_experimental } from '@lexical/selection';
 import { $isRangeSelection, type TextFormatType } from 'lexical';
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
@@ -25,6 +26,11 @@ import {
   getDefaultCodeLanguage,
   getCodeLanguages
 } from "@lexical/code";
+import {
+  $isParentElementRTL,
+  $wrapLeafNodesInElements,
+  $isAtNodeEnd
+} from "@lexical/selection";
 
 const theme = {
   heading: {
@@ -56,6 +62,22 @@ function MyCustomAutoFocusPlugin() {
 
   return null;
 }
+function Divider() {
+  return <div className="divider" />;
+}
+
+const formatParagraph = () => {
+  if (blockType !== "paragraph") {
+    editor.update(() => {
+      const selection = $getSelection();
+
+      if ($isRangeSelection(selection)) {
+        $wrapLeafNodesInElements(selection, () => $createParagraphNode());
+      }
+    });
+  }
+  // setShowBlockOptionsDropDown(false);
+};
 
 function HeadingToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -63,9 +85,13 @@ function HeadingToolbarPlugin() {
   
   const onClick = () => {
     editor.update(() => {
-      const root = $getRoot();
+      // const root = $getRoot();
+      const selection= $getSelection();
+      if ($isRangeSelection(selection)){
+        $setBlocksType_experimental(selection,()=>$createHeadingNode('h1'))
+      }
       console.log('rooot',root)
-      root.append($createHeadingNode('h1').append($createTextNode('BIG HEADING MF')))
+      // root.append($createHeadingNode('h1').append($createTextNode('BIG HEADING MF')))
     });
 
   };
@@ -87,6 +113,28 @@ function MediumHeadingToolbarPlugin() {
 
   };
   return <Button onClick={onClick}>ADD ANOTHER</Button>
+}
+
+function BToolbarPlugin() {
+  const [editor] = useLexicalComposerContext();
+  const headingTags = ['h1', 'h2', 'h3'];
+  
+  const onClick= () => {
+    editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
+  }
+
+  return 
+  <div>
+    <Button onClick={onClick}
+            
+            className={"toolbar-item spaced " + (isBold ? "active" : "")}
+            aria-label="Format Bold"
+          >
+            {/* <i className="format bold" />
+             */}hi
+          </Button>
+          </div>
+  // <Button onClick={onClick}>ADD ANOTHER</Button>
 }
 
 
@@ -256,7 +304,8 @@ export function Editor(props) {
   }
   
   const [editorState, setEditorState] = useState();
-
+  const [blockType, setBlockType] = useState("paragraph");
+  const [isBold, setIsBold] = useState(false);
 
   //onchange fucntion
   function onChange(editorState) {
@@ -286,6 +335,7 @@ export function Editor(props) {
           <MediumHeadingToolbarPlugin/>
           <CodeToolbarPlugin/>
           <QuoteToolbarPlugin/>
+          <BToolbarPlugin/>
           {/* <SimpleListPlugin/> */}
           {/* <ToolbarPlugin /> */}
         </div>
