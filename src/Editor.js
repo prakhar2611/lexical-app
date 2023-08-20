@@ -105,8 +105,10 @@ export function Editor({content,title}) {
   // const [editorState, setEditorState] = useState();
   const [saveContent, setsaveContent] = useState();
   const [iseditable , setiseditable] =useState(false);
+  const [savelabel,setsavelabel] = useState("Save")
   const [ref, setref] = useState(0);
   const [currtitle,setcurrTitle] =useState('')
+  
 
  
    //save it to db function
@@ -136,6 +138,25 @@ export function Editor({content,title}) {
       setsaveContent(JSON.stringify(editorStateJSON));
     }
 
+    // on edit button make editable true 
+    function makeEditable() {
+         setiseditable(true)
+         setcurrTitle(title)     
+    }
+    function makeUneditable() {
+          setiseditable(false)
+    
+    }
+
+  function setCurrentTitle(value) {
+    setcurrTitle(value)
+    if(value != title){
+      setsavelabel("Save As")
+    }else{
+      setsavelabel("Save")
+
+    }
+  }
   //loding initial state
   // const initialEditorState = loadContent();
 
@@ -171,11 +192,12 @@ const plchldr = currentdate.getDate() + "-"
             <Button style={{'padding':'.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Edit" title="OK">SAVE</Button> */}
           
             <div style={{'backgroundColor':'salmon','display':'flex','flexDirection':'row','padding':'1rem','justifyContent':'space-between','gap':20}}>
-            <div style={{'width':'40vw','font-size':'18px'}} >{title}</div>
-            <Button style={{'width':'10vw'}} label="Save" onClick={onSave} > Save </Button>
-            <Button style={{'width':'10vw'}} label="edit"> Edit </Button>
+          { (!iseditable)&&<div style={{'width':'40vw','font-size':'18px'}} >{title}</div> }
+          {  (iseditable)&&<Button style={{'width':'10vw'}} label="cancel" onClick={makeUneditable} > Cancel </Button> }
+          { (!iseditable)&&< Button style={{'width':'10vw'}} label="edit" onClick={makeEditable}> Edit </Button> }
+          {  (iseditable)&&<Button style={{'width':'10vw'}} label="Save" onClick={onSave} > {savelabel} </Button> }
       </div>
-          <Input disabled={false} onChange={(e)=>setcurrTitle(e.target.value)} placeholder={plchldr} />
+      {(iseditable)&&<Input value={currtitle} disabled={false} onChange={(e)=>setCurrentTitle(e.target.value)} placeholder={plchldr} />}
           </div>
         {/* <div>
           <h2>{title}</h2>
