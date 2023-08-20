@@ -9,6 +9,8 @@ import { setcontent } from './Utils/Reducers/contentSlice';
 import {Editor} from "./Editor";
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import { setCurrPage } from './Utils/Reducers/pageSlice';
+import configData from "./config.json";
+
 
 // import { EditorProvider } from './Editor/EditorProvider'
 
@@ -19,7 +21,7 @@ export  function saveFile(payload,title) {
   }
 
   console.log("save file payload :", saveFileRequest)
-  axios.post(`http://localhost:9005/docs/api/v1/save?new=true`,JSON.stringify(saveFileRequest),{
+  axios.post(configData.BASE_URL+`docs/api/v1/save?new=true`,JSON.stringify(saveFileRequest),{
     headers: {           
         'Content-Type': 'application/json',
     },
@@ -56,7 +58,7 @@ export function FileList () {
 
   
 function getlist() {
-   axios.get(`http://localhost:9005/docs/api/v1/listDocs`,{
+   axios.get(configData.BASE_URL+`docs/api/v1/listDocs`,{
             headers: {           
                 'Content-Type': 'application/json',
             },        

@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   background: #eeeeee;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, ".SFNSText-Regular",
@@ -7,7 +7,7 @@ body {
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} */
 /* 
 .layout{
   display: flex;
@@ -21,8 +21,9 @@ body {
 body {
   margin: 0;
   background: #eeeeee;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, ".SFNSText-Regular",
-    sans-serif;
+  /* font-family: system-ui, -apple-system, BlinkMacSystemFont, ".SFNSText-Regular",
+    sans-serif; */
+  font-family:  Helvetica, Arial,sans-serif;
   font-weight: 500;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
@@ -32,11 +33,13 @@ body {
 
 .layout{
   display: flex; 
-  justify-content: space-evenly;
-  justify-items: center; 
+  /* justify-content: space-around; */
+  /* justify-content: flex-s/////tart; */
+  /* justify-items: center;  */
   background-color: beige;
+  overflow: hidden;
   flex-direction: Row;
-  height: 100vh;
+  height: 90vh;
   
 /* button {
     all: unset;

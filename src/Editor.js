@@ -5,6 +5,8 @@ import { $isRangeSelection, type TextFormatType } from 'lexical';
 import { $setBlocksType } from '@lexical/selection';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { $createHeadingNode} from '@lexical/rich-text';
+import configData from "./config.json";
+
 import {
   $isParentElementRTL,
   $wrapLeafNodesInElements,
@@ -171,7 +173,8 @@ const plchldr = currentdate.getDate() + "-"
             <div style={{'backgroundColor':'salmon','display':'flex','flexDirection':'row','padding':'1rem','justifyContent':'space-between','gap':20}}>
             <div style={{'width':'40vw','font-size':'18px'}} >{title}</div>
             <Button style={{'width':'10vw'}} label="Save" onClick={onSave} > Save </Button>
-          </div>
+            <Button style={{'width':'10vw'}} label="edit"> Edit </Button>
+      </div>
           <Input disabled={false} onChange={(e)=>setcurrTitle(e.target.value)} placeholder={plchldr} />
           </div>
         {/* <div>
