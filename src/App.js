@@ -32,7 +32,7 @@ export default function App() {
             <Button style={{'padding':'1.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Save" title="Hi">Save</Button>
             <Button style={{'padding':'1.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Edit" title="OK">Edit</Button>
           </div> */}
-          <div  style={{'overflow':'scroll','flex':4,'background' : '#ffd',}}> 
+          <div  style={{'overflow':'hidden','flex':4,'background' : '#ffd',}}> 
           <Editor content={content} title={title}/> 
           </div>
         

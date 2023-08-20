@@ -186,18 +186,18 @@ const plchldr = currentdate.getDate() + "-"
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <div style={{'display':'flex','flexDirection':'column','padding':'1rem','justifyContent':'space-between'}}>
-      <div style={{'padding':'.2rem','border':'2px solid black','display':'flex','justifyContent':'space-around','flexDirection':'column','gap':'.2rem'}}> 
+      <div style={{'display':'flex','flexDirection':'column','padding':'1rem','justifyContent':'space-between', 'overflow':'hidden'}}>
+        <div style={{'padding':'.2rem','border':'2px solid black','display':'flex','justifyContent':'space-around','flexDirection':'column','gap':'.2rem',}}> 
             {/* <Button style={{'padding':'.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Save" title="Hi">CREATE</Button>
             <Button style={{'padding':'.2rem','margin':'.5rem','backgroundColor':'rgba(170,180,220,.5)'}} label="Edit" title="OK">SAVE</Button> */}
           
-            <div style={{'backgroundColor':'salmon','display':'flex','flexDirection':'row','padding':'1rem','justifyContent':'space-between','gap':20}}>
+          <div style={{'backgroundColor':'salmon','display':'flex','flexDirection':'row','padding':'1rem','justifyContent':'space-between','gap':20}}>
           { (!iseditable)&&<div style={{'width':'40vw','font-size':'18px'}} >{title}</div> }
           {  (iseditable)&&<Button style={{'width':'10vw'}} label="cancel" onClick={makeUneditable} > Cancel </Button> }
           { (!iseditable)&&< Button style={{'width':'10vw'}} label="edit" onClick={makeEditable}> Edit </Button> }
           {  (iseditable)&&<Button style={{'width':'10vw'}} label="Save" onClick={onSave} > {savelabel} </Button> }
-      </div>
-      {(iseditable)&&<Input value={currtitle} disabled={false} onChange={(e)=>setCurrentTitle(e.target.value)} placeholder={plchldr} />}
+            </div>
+          {(iseditable)&&<Input value={currtitle} disabled={false} onChange={(e)=>setCurrentTitle(e.target.value)} placeholder={plchldr} />}
           </div>
         {/* <div>
           <h2>{title}</h2>
@@ -208,8 +208,12 @@ const plchldr = currentdate.getDate() + "-"
           <HeadingToolbarPlugin/>
         </div>   
         
-            <RichTextPlugin
-              contentEditable={<ContentEditable />}
+            <RichTextPlugin 
+            style={{'overflow':'hidden'}}
+              contentEditable={<ContentEditable 
+                className='contentEditable'
+                //  style={{'overflow':'scroll','height':'60vh'}} 
+                 />}
               placeholder={<div>Enter some text...</div>}
               ErrorBoundary={LexicalErrorBoundary}
             />
