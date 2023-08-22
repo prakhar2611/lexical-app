@@ -1,7 +1,0 @@
-{
-    "BASE_URL": "http://localhost:9005/",
-    "THEME_COLORS": {
-      "PRIMARY": "#007bff",
-      "SECONDARY": "#fc3"
-    }
-  }

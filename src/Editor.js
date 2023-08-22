@@ -5,8 +5,6 @@ import { $isRangeSelection, type TextFormatType } from 'lexical';
 import { $setBlocksType } from '@lexical/selection';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { $createHeadingNode} from '@lexical/rich-text';
-import configData from "./config.json";
-
 import {
   $isParentElementRTL,
   $wrapLeafNodesInElements,

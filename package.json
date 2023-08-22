@@ -19,7 +19,9 @@
     "web-vitals": "^3.4.0"
   },
   "devDependencies": {
-    "@babel/runtime": "7.13.8"
+    "@babel/runtime": "7.13.8",
+    "dotenv-webpack": "^8.0.1",
+    "webpack-cli": "^5.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
