@@ -29,7 +29,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setcontent } from './Utils/Reducers/contentSlice';
 
 import { Button, Form, Input, Radio,Layout,message,Switch,Progress,Badge,Avatar,Statistic} from 'antd';
-import RefreshContentPlugin from './plugins/RefreshContentPlugin';
+import RefreshContentPlugin from './Plugins/RefreshContentPlugin';
 import { saveFile } from './FileList';
 
 const theme = {

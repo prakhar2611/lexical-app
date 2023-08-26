@@ -5,12 +5,36 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
 import store from './Utils/store'
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import SignIn from './Pages/Sing-In/SignIn';
+import { CallbackRoute } from './apis/CallBack';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <SignIn />,
+  },
+  {
+    path : "/docs",
+    element : <App/>
+  },
+  {
+    path : "/auth/callback",
+    element : <CallbackRoute />
+
+  }
+]);
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
       <Provider store={store}>
 
-    <App />
+      <RouterProvider router={router} />
     </Provider>
 
   </React.StrictMode>
