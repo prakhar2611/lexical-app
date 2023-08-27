@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import {AppTest} from './Pages/Doc/App'
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
 import store from './Utils/store'
@@ -25,7 +26,11 @@ const router = createBrowserRouter([
     path : "/auth/callback",
     element : <CallbackRoute />
 
-  }
+  },
+  {
+    path : "/testdocs",
+    element : <AppTest/>
+  },
 ]);
 
 

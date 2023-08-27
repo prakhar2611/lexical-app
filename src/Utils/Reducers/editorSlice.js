@@ -1,3 +1,4 @@
+//not using for now
 import { createSlice } from '@reduxjs/toolkit'
 import { LexicalEditor } from '../../Editor/Editor'
 

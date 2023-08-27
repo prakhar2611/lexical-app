@@ -5,7 +5,7 @@ import axios from 'axios'
 
 
 
-export function () {
+export function CallbackRoute() {
     var [token, settoken] = useState()
     var [expiry, setexpiry] = useState()
     var [tokentype, settokentype] = useState()

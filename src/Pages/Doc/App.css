@@ -1,0 +1,79 @@
+@import '@radix-ui/colors/violet.css';
+
+.SeparatorRoot {
+  background-color: var(--violet-6);
+}
+.SeparatorRoot[data-orientation='horizontal'] {
+  height: 1px;
+  width: 100%;
+}
+.SeparatorRoot[data-orientation='vertical'] {
+  height: 100%;
+  width: 1px;
+}
+
+.mainflex {
+  height: 70rem;
+  flex-direction: column;
+  background-color:darkturquoise;
+  z-index: -1;
+}
+
+.topNavBar{
+  display: flex;
+  background-color: blueviolet;
+  height: 2.8rem;
+  padding: 1.8px;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  height: 70rem;
+
+  /* background-color:black; */
+  /* justify-content: flex-start;*/
+  align-items :stretch; 
+  gap: 1.3rem;
+}
+
+.sideBar{
+  display: flex;
+  background-color: brown;
+}
+
+.editor {
+  /* background-color: bisque; */
+  display: flex;
+  flex: 1;
+
+  flex-direction: column;
+  /* flex-direction: column;
+  align-items :stretch; */
+}
+
+
+.editor-1{
+  display: flex;
+  height: 5rem;
+  padding: 8px;
+  width: auto;
+  gap: 1.5rem;
+  justify-content:flex-start;
+  flex-direction: row;
+}
+
+.editor-2{
+  display: flex;
+  flex-direction: row;
+  height: 50rem;
+  width: auto;
+  padding: 8px;
+}
+
+
+.editarea{
+  height: 70rem;
+  display: flex;
+  flex-grow: 1;
+}
