@@ -32,6 +32,7 @@ import {  Form, Input, Radio,Layout,message,Switch,Progress,Badge,Avatar,Statist
 import RefreshContentPlugin from '../../Plugins/RefreshContentPlugin';
 import { saveFile } from './FileList';
 import { ToolbarDemo } from './Toolbar';
+import { setSave } from '../../Utils/Reducers/toSaveContentSlice';
 
 const theme = {
   heading: {
@@ -111,10 +112,10 @@ export function Editor({content,title}) {
 
  
    //save it to db function
-   function onSave() {
-    console.log("save content =====> ",  saveContent)
-    saveFile(saveContent,currtitle)
-    }
+  //  function onSave() {
+  //   console.log("save content =====> ",  saveContent)
+  //   saveFile(saveContent,currtitle)
+  //   }
 
     //listner to change
     function OnChangeLivePlugin({onChange}) {
@@ -135,6 +136,7 @@ export function Editor({content,title}) {
 
       const editorStateJSON = state.editorState.toJSON();
       setsaveContent(JSON.stringify(editorStateJSON));
+      dispatch(setSave(JSON.stringify(editorStateJSON)))
     }
 
     // on edit button make editable true 

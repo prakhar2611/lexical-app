@@ -15,7 +15,7 @@
 .mainflex {
   height: 70rem;
   flex-direction: column;
-  background-color:darkturquoise;
+  background-color:darkslategrey;
   z-index: -1;
 }
 
@@ -24,6 +24,7 @@
   background-color: blueviolet;
   height: 2.8rem;
   padding: 1.8px;
+  margin: 2px;
 }
 
 .content {
@@ -39,7 +40,7 @@
 
 .sideBar{
   display: flex;
-  background-color: brown;
+  padding: 8px;
 }
 
 .editor {

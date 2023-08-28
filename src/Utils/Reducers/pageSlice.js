@@ -5,6 +5,7 @@ export const pageSlice = createSlice({
   initialState: {
     value:{
         'title' : 'Create New',
+        'folder' : '',
         'content' : '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"sdfdsf","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"this is initial state of editor editor","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"dasds","type":"text","version":1},{"type":"linebreak","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
     }},
   reducers: {
@@ -13,11 +14,16 @@ export const pageSlice = createSlice({
     //   state.value.content = action.payload.meta
     //   state.value.pageId = ''
     //   state.value.pageName = action.payload.title
-    state.value.title = action.payload.title
-    state.value.content = action.payload.meta
-    // console.log("on click Page state =====> " ,state.value)
+    state.value.title = action.payload.Title
+    state.value.content = action.payload.MetaData
 
     },
+    setCurrFolder: (state, action) => {
+      console.log("on click Page state =====> " ,action.payload)
+
+      state.value.folder = action.payload.title
+
+  },
 
     // setCurrPageName: (state, action) => {
     //   state.value.title = action.payload
@@ -26,6 +32,6 @@ export const pageSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setCurrPage } = pageSlice.actions
+export const { setCurrPage, setCurrFolder } = pageSlice.actions
 
 export default pageSlice.reducer
