@@ -26,35 +26,34 @@ const serverurl = process.env.REACT_APP_TEST_SERVER_URL
 
 export function FileList () {
   
-  const directory = useSelector((state) => state.directory.value)
+  const directory = useSelector((state) => state.directory.value.tree)
   const currFolder = useSelector((state) => state.page.value["folder"])
+  // const folderList = useSelector((state)=>state.directory.value.folderList);
+
   //const[c,setc] = useState(content_meta)
   console.log("directory : ", JSON.stringify(directory))
+  // console.log("Folder List : ",  folderList)
+
+
   const dispatch = useDispatch()
 
   const onSelect = (selectedKeys, info) => {
     const value =''
     console.log('selected', selectedKeys,     info.node);
-    // const initialEditorState = editor.parseEditorState(value)
-    // editor.setEditorState(info.node.meta)
-    // getdocmeta()
+    dispatch(setCurrFolder(info.node.folder))
+
     if(info.node.isLeaf) {
-      getdocmeta(info.node.title,currFolder).then(res => {
+      getdocmeta(info.node.title,info.node.folder).then(res => {
         console.log(res)
         dispatch(setCurrPage(res))
-        //dispatch(setcontent(res.MetaData))
       }).catch(error => console.error(error))
     }else{
       onExpand(selectedKeys,info)
     }
-   
-    
-    //setc(info.node.meta)
-    // Enumerable.from(data).where((x)=> {return selectedKeys[0]==x.})
   };
 
   function onExpand (keys, info){
-    dispatch(setCurrFolder(info.node))
+    dispatch(setCurrFolder(info.node.title))
   };
 
 
@@ -63,7 +62,7 @@ export function FileList () {
       getdocs().then(res => {
        dispatch(updatedirectory(res)) 
       }).catch(error => console.error(error))
-    }, []);    
+    }, [1]);    
    
 
   return (

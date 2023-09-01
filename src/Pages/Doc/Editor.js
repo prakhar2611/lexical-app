@@ -190,7 +190,7 @@ const plchldr = currentdate.getDate() + "-"
            
            <RichTextPlugin 
            style={{'overflow':'hidden','display':'flex'}}
-          contentEditable={<ContentEditable 
+          contentEditable={<ContentEditable className='contentEditable'
             />}
           placeholder={<div>Enter some text...</div>}
           ErrorBoundary={LexicalErrorBoundary}

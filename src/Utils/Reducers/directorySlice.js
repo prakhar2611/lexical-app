@@ -29,16 +29,31 @@ const treeData = [
 export const directorySlice = createSlice({
   name: 'editor',
   initialState: {
-    value: treeData
+    value: {
+      tree :treeData ,
+      folderList : [ ]
+    }
   },
   reducers: {
     setdirectory: (state, action) => {
     console.log("on click" ,action.payload)
-    state.value = action.payload
+    state.value.tree = action.payload
     },
 
     updatedirectory: (state, action) => {
-        state.value=[...action.payload]
+        state.value.tree =[...action.payload]
+        const folders = []
+        state.value.tree.forEach(element => {
+        const value = {
+          value : element.title,
+          label : element.title
+        }
+
+        folders.push(value)
+        console.log(folders)
+
+        });
+        state.value.folderList = folders
         }
   },
 })

@@ -30,7 +30,7 @@ export function CallbackRoute() {
     }
 
     //useEffect(() =>{ 
-       axios.post('http://192.168.1.5:9005/api/User/v1/Signin', JSON.stringify(data),{
+       axios.post('http://localhost:9005/api/User/v1/Signin', JSON.stringify(data),{
         headers: {
             'Content-Type': 'application/json',
          },
