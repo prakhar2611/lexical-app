@@ -11,6 +11,8 @@ import {
   ListBulletIcon,
   QuoteIcon,
   HeadingIcon,
+  Cross1Icon,
+  AlignLeftIcon
 } from '@radix-ui/react-icons';
 import '../Toolbar.css';
 import {
@@ -52,8 +54,13 @@ import {
   getDefaultCodeLanguage,
   getCodeLanguages
 } from "@lexical/code";
-import { DownOutlined } from '@ant-design/icons';
-import { Dropdown,Select, message, Space } from 'antd';
+import { CodeFilled, CodeSandboxCircleFilled, DownOutlined, EditFilled, EditTwoTone, FieldNumberOutlined, NumberOutlined, SaveFilled, SaveTwoTone, StopTwoTone } from '@ant-design/icons';
+import { Dropdown,Select, message, Space,Modal,Input } from 'antd';
+import { useDispatch, useSelector } from "react-redux";
+import { seteditable, setonselectEditable } from "../../../Utils/Reducers/editorSlice";
+import { Theme,Flex,Container,Box, Card, Heading, Text } from "@radix-ui/themes";
+import * as Separator from '@radix-ui/react-separator';
+import { getdocs, saveFile } from "../../../apis/DocsApi";
 
 const LowPriority = 1;
 
@@ -66,6 +73,20 @@ const supportedBlockTypes = new Set([
   "ul",
   "ol"
 ]);
+const currentdate = new Date(); 
+const datetime = "Last Sync: " + currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+const plchldr = currentdate.getDate() + "-"
+                + (currentdate.getMonth()+1)  + "-" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes()  + " | " 
+                + " Enter a title for this record"
+
 
 const blockTypeToBlockName = {
   code: "Code Block",
@@ -135,10 +156,102 @@ export default function NewToolbarPlugin() {
   const [isStrikethrough, setIsStrikethrough] = useState(false);
   const [isCode, setIsCode] = useState(false);
 
+  function MySmallCurdComponent() {
+      //for save and edit playing with store at 3am
+      const saveContent = useSelector((state)=>state.tosavecontent.value);
+      const iseditable = useSelector((state) =>state.editor.value.editable)
+      const onselectedit =  useSelector((state) =>state.editor.value.onselectEditable)
+      const title = useSelector((state)=>state.page.value['title']);
+      const [isModalOpen, setIsModalOpen] = useState(false);
+      const folder =  useSelector((state)=>state.page.value['folder']);
+      const folderList = useSelector((state)=>state.directory.value.folderList);
+
+      const [currfoldername,setinputFolder] = useState(folder)
+      const [currtitle,setcurrTitle] =useState(title)
+      const [savelabel,setsavelabel] = useState("Save")
+
+
+      const dispatch = useDispatch()
+
+      function makeEditable() {
+        editor.setEditable(true)
+        dispatch(seteditable(true))
+            setcurrTitle(title)     
+      }
+      function makeUneditable() {
+        editor.setEditable(false)
+        dispatch(seteditable(false))
+        dispatch(setonselectEditable(false))
+      }
+
+      function makeFolderEdit(value) {
+        dispatch(setonselectEditable(value))
+      }
+
+      function setCurrentTitle(value) {
+        setcurrTitle(value)
+        if(value != title){
+          setsavelabel("Save As")
+        }else{
+          setsavelabel("Save")
+        }
+      }
+
+
+      const showModal = () => {
+      setIsModalOpen(true);
+      };
+      const handleOk = () => {
+      console.log("save content =====> ",  saveContent)
+          //dispatch(setCurrFolder(currfoldername))
+          saveFile(saveContent,currtitle,currfoldername)
+          getdocs().then(res => {
+            dispatch(updatedirectory(res)) 
+          }).catch(error => console.error(error))
+          dispatch(setonselectEditable(false))
+          dispatch(seteditable(false))
+          editor.setEditable(false)
+          setIsModalOpen(false);
+          message.info(`File Saved !`);
+      };
+      const handleCancel = () => {
+      setIsModalOpen(false);
+      };
+
+    return ( 
+      <div style={{'display' : 'flex', 'flexDirection' : 'row' , 'gap' : '1rem', 'marginLeft' : 'auto', 'padding' : '5px', 'alignItems' : 'center'}}>
+      {(!iseditable)&&<EditTwoTone onClick={() => makeEditable()} />}  
+      {(iseditable)&&<SaveTwoTone  onClick={() => showModal()} />}
+      <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <Card style={{'width' :'25rem' ,'display':'flex','flexGrow' : '6'}}>
+                <Flex direction={"column"} >
+                  {(!iseditable)&&<Heading size={"5"}>{title}</Heading>}
+                  {(iseditable)&&<Input style={{'width':'50rem'}} value={currtitle} disabled={false} onChange={(e)=>setCurrentTitle(e.target.value)} placeholder={plchldr} />}
+
+                  <Separator.Root className="SeparatorRoot" style={{ margin: '5px 0px' }} />
+                  <Flex style={{'justifyContent' :'flex-start' ,'gap': '1rem','alignItems':'baseline'}}>            
+                    <Heading size={"2"}>Folder</Heading> 
+                    {(!onselectedit) &&<Select disabled = {!iseditable} value={currfoldername} options={folderList} onSelect={(x) => {setinputFolder(x)}} ></Select>}
+                    {(onselectedit)  &&<Input style={{'width':'30rem'}} value={currfoldername} disabled={false} onChange={(e)=>setinputFolder(e.target.value)} placeholder={plchldr} />}
+                    {(iseditable&&!onselectedit) &&< EditTwoTone label="edit" onClick={(x) => {makeFolderEdit(true)}} > </EditTwoTone> }
+                    {(iseditable&&onselectedit)  &&< Cross1Icon label="edit" onClick={(x) => {makeFolderEdit(false)}} > </Cross1Icon> }
+                  </Flex>
+                </Flex>
+              </Card>
+      </Modal>
+      {(iseditable)&&<StopTwoTone onClick={() => makeUneditable()}/>}
+      </div>
+     
+    )
+  }
+
+  
   function CustomDropDown () {
  
+    const iseditable = useSelector((state) =>state.editor.value.editable)
+
     const onClick = ({ key }) => {
-      message.info(`Click on item ${key}`);
+      // message.info(`Click on item ${key}`);
       if(key == '1') {
         editor.update(() => {
           const selection = $getSelection();
@@ -190,33 +303,34 @@ export default function NewToolbarPlugin() {
 
     const items = [
       {
-        label: 'Normal',
+        label: <span style={{'display' : 'flex', 'justifyContent' : 'space-evenly' , 'alignItems' : 'center'}} ><AlignLeftIcon />Normal</span>,
         key: '1',
       },
       {
-        label: 'Heading 1',
+        label:   <span style={{'display' : 'flex', 'justifyContent' : 'space-evenly' , 'alignItems' : 'center'}} ><HeadingIcon />Heading 1</span>,
         key: '2',
       },
       {
-        label: 'Heading 2',
+        label:  <span style={{'display' : 'flex', 'justifyContent' : 'space-evenly' , 'alignItems' : 'center'}} ><HeadingIcon />Heading 2</span>,
         key: '3',
       },
       {
-        label: 'Bullet Point',
+        label:  <span style={{'display' : 'flex', 'justifyContent' : 'space-evenly' , 'alignItems' : 'center'}} ><ListBulletIcon />Bullet Points</span>,
         key: '4',
       },
       {
-        label: 'Number List',
+        label:  <span style={{'display' : 'flex', 'justifyContent' : 'space-evenly' , 'alignItems' : 'center'}} ><NumberOutlined />Number List</span>,
         key: '5',
       },
       {
-        label: 'Code Block',
+        label:  <span style={{'display' : 'flex', 'justifyContent' : 'space-evenly' , 'alignItems' : 'center'}} ><CodeFilled />Code Block</span>,
         key: '6',
       },
     ];
 
     return(
       <Dropdown
+      disabled = {!iseditable}
       menu={{
         items,
         onClick,
@@ -386,6 +500,7 @@ export default function NewToolbarPlugin() {
     });
   }
     
+  const iseditable  = useSelector((state) =>state.editor.value.editable)
     
     
 
@@ -400,7 +515,7 @@ export default function NewToolbarPlugin() {
   return (
 
   <Toolbar.Root className="ToolbarRoot" aria-label="Formatting options">
-    <Toolbar.ToggleGroup type="multiple" aria-label="Text formatting">
+    <Toolbar.ToggleGroup disabled={!iseditable} type="multiple" aria-label="Text formatting">
       <Toolbar.ToggleItem className="ToolbarToggleItem" value="bold" aria-label="Bold" onClick={()=> {editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold")}}>
         <FontBoldIcon />
       </Toolbar.ToggleItem>
@@ -421,7 +536,7 @@ export default function NewToolbarPlugin() {
       </Toolbar.ToggleItem>
     </Toolbar.ToggleGroup>
     <Toolbar.Separator className="ToolbarSeparator" />
-    <Toolbar.ToggleGroup type="single" defaultValue="center" aria-label="Text alignment">
+    <Toolbar.ToggleGroup disabled={!iseditable} type="single" defaultValue="left" aria-label="Text alignment">
       <Toolbar.ToggleItem className="ToolbarToggleItem" value="left" aria-label="Left aligned" onClick={()=> { editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");}}>
         <TextAlignLeftIcon />
       </Toolbar.ToggleItem>
@@ -442,13 +557,19 @@ export default function NewToolbarPlugin() {
       </Toolbar.ToggleItem>
     </Toolbar.ToggleGroup>
     <Toolbar.Separator className="ToolbarSeparator" />
+
+    {/* custom toolbar drowpdown */}
     <CustomDropDown/>
     {/* {code&&
        <LanguageDropDown codeLanguage={codeLanguages} oncodechange={onCodeLanguageSelect}/>
       } */}
-    <Toolbar.Button className="ToolbarButton" style={{ marginLeft: 'auto' }}>
+    {/* <Toolbar.Button className="ToolbarButton" style={{ marginLeft: 'auto' }}>
       Share
-    </Toolbar.Button>
+    </Toolbar.Button> */}
+
+    {/* small curd modal attached to the toolbar */}
+    <MySmallCurdComponent/>
+
   </Toolbar.Root>
 
      );

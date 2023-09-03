@@ -17,6 +17,7 @@ import { setCurrFolder, setNewPage } from "../../Utils/Reducers/pageSlice";
 import { Cross1Icon, CrossCircledIcon } from "@radix-ui/react-icons";
 import { setUser } from "../../Utils/Reducers/userSlice";
 import { getuserDetails } from "../../apis/SignIn";
+import { seteditable, setonselectEditable } from "../../Utils/Reducers/editorSlice";
 
   
 export function AppTest() {
@@ -26,17 +27,16 @@ export function AppTest() {
   const folder =  useSelector((state)=>state.page.value['folder']);
   const saveContent = useSelector((state)=>state.tosavecontent.value);
   const folderList = useSelector((state)=>state.directory.value.folderList);
-
+  const iseditable = useSelector((state) =>state.editor.value.editable)
+  const onselectedit =  useSelector((state) =>state.editor.value.onselectEditable)
 
   const dispatch = useDispatch()
-  const [iseditable , setiseditable] = useState(false);
 
   const [currtitle,setcurrTitle] =useState(title)
   const [currfoldername,setinputFolder] = useState(folder)
-  const[userimage,setuserimage] = useState('')
+  const [userimage,setuserimage] = useState('')
 
   const [savelabel,setsavelabel] = useState("Save")
-  const [onselectedit,setonselectedit] = useState(false)
 
 const currentdate = new Date(); 
 const datetime = "Last Sync: " + currentdate.getDate() + "/"
@@ -56,13 +56,13 @@ const datetime = "Last Sync: " + currentdate.getDate() + "/"
 
       // on edit button make editable true 
   function makeEditable() {
-        setiseditable(true)
+    dispatch(seteditable(true))
         setcurrTitle(title)     
   }
 
   function makeUneditable() {
-         setiseditable(false)
-         setonselectedit(false)
+         dispatch(seteditable(false))
+         dispatch(setonselectEditable(false))
   }
 
   function setCurrentTitle(value) {
@@ -80,7 +80,7 @@ const datetime = "Last Sync: " + currentdate.getDate() + "/"
   }
 
   function makeFolderEdit(value) {
-    setonselectedit(value)
+    dispatch(setonselectEditable(value))
   }
 
   // function GetFileList()
@@ -114,21 +114,27 @@ const datetime = "Last Sync: " + currentdate.getDate() + "/"
   return (
   <Theme accentColor="orange" grayColor="sand" radius="large" scaling="95%">
       <Flex className="mainflex">  
+
         <div className="topNavBar">
           <Flex gap={"3"}>
-        <Heading size={"7"}>KNOTS</Heading>
-        <Avatar size={40} icon={<img src="./knots.jpg"></img>} />
-        </Flex>
-        <Avatar size={40} icon={<img src={userimage}></img>} />
-        </div>                  
-        <div className="content">
+            <Heading size={"7"}>KNOTS</Heading>
+            <Avatar size={40} icon={<img src="./knots.jpg"></img>} />
+          </Flex>
+          <Flex gap={"3"} style={{'alignItems' : 'center'}}>
+            <Heading size={"5"}>{title}</Heading>
+              <Text size={"2"}>{folder}</Text>
+           </Flex>
+          <Avatar size={40} icon={<img src={userimage}></img>} />
+        </div>          
+
+        <Flex className="content">
           <Flex className="sideBar">
           { (!iseditable)&&<PlusCircleTwoTone onClick={setCreateTemplate} /> }
             <FileList/>
           </Flex>
           
           <Flex className="editor">
-            <div className="editor-1">
+            {/* <div className="editor-1">
               <Card style={{'width' :'25rem' ,'display':'flex','flexGrow' : '6'}}>
                 <Flex direction={"column"} >
                   {(!iseditable)&&<Heading size={"5"}>{title}</Heading>}
@@ -152,13 +158,13 @@ const datetime = "Last Sync: " + currentdate.getDate() + "/"
               </Card>
 
               
-            </div>
+            </div> */}
               <div className="editor-2">
                 <Editor content={content} title={title}/>           
                 {/* <RichEditor/> */}
               </div>
           </Flex>
-        </div>        
+        </Flex>        
                                                                                                                                                                                                                                                                                                                                                                                                                                               
         
       

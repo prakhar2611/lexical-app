@@ -81,7 +81,7 @@ export function FileList () {
       switcherIcon={<DownOutlined />}
       defaultExpandAll={true}
       onSelect={onSelect}
-      onExpand={onExpand}
+      // onExpand={onExpand}
       treeData={directory}
     />
   // {/* <Editor content={c}/>  */}

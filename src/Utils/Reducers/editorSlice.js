@@ -1,26 +1,25 @@
-//not using for now will use for multi editor states 
 
-// import { createSlice } from '@reduxjs/toolkit'
-// import { LexicalEditor } from '../../Editor/Editor'
+import { createSlice } from '@reduxjs/toolkit'
 
-// export const contentSlice = createSlice({
-//   name: 'editor',
-//   initialState: {
-//     value: LexicalEditor
-//   },
-//   reducers: {
-//     createEditor: (state, action) => {
-//     console.log("on click" ,action.payload)
-//     state.value = action.payload
-//     },
+export const editorSlice = createSlice({
+  name: 'editor',
+  initialState: {
+    value: {
+        editable : false ,
+        onselectEditable : false
+    }
+  },
+  reducers: {
+    seteditable (state,action){
+        state.value.editable = action.payload
+    },
+    setonselectEditable(state,action){
+        state.value.onselectEditable = action.payload
+    }
+  },
+})
 
-//     onChangeEditor : (state,action) => {
-//         state.value = action.payload
-//     }
-//   },
-// })
+// Action creators are generated for each case reducer function
+export const { seteditable,setonselectEditable } = editorSlice.actions
 
-// // Action creators are generated for each case reducer function
-// export const { setcontent } = contentSlice.actions
-
-// export default contentSlice.reducer
+export default editorSlice.reducer
