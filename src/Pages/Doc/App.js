@@ -12,7 +12,7 @@ import {useEffect,useState} from 'react';
 import { Theme,Flex,Container,Box, Card, Heading, Text } from "@radix-ui/themes";
 import { updatedirectory } from "../../Utils/Reducers/directorySlice";
 import { getdocs,saveFile } from "../../apis/DocsApi";
-import { EditTwoTone } from "@ant-design/icons";
+import { EditTwoTone, PlusCircleTwoTone, UserOutlined } from "@ant-design/icons";
 import { setCurrFolder, setNewPage } from "../../Utils/Reducers/pageSlice";
 import { Cross1Icon, CrossCircledIcon } from "@radix-ui/react-icons";
 
@@ -106,18 +106,21 @@ const datetime = "Last Sync: " + currentdate.getDate() + "/"
   return (
   <Theme accentColor="orange" grayColor="sand" radius="large" scaling="95%">
       <Flex className="mainflex">  
-        <Card className="topNavBar">
-        { (!iseditable)&&< Button style={{'width':'10vw'}} label="edit" onClick={setCreateTemplate} ><EditTwoTone/> Create New </Button> }
-        </Card>                  
+        <div className="topNavBar">
+        <Heading size={"7"}>KNOTS</Heading>
+        <Avatar size={40} icon={<img src=""></img>} />
+        </div>                  
         <div className="content">
-          <div className="sideBar">
+          <Flex className="sideBar">
+          { (!iseditable)&&<PlusCircleTwoTone onClick={setCreateTemplate} /> }
             <FileList/>
-          </div>
-          <div className="editor">
+          </Flex>
+          
+          <Flex className="editor">
             <div className="editor-1">
               <Card style={{'width' :'25rem' ,'display':'flex','flexGrow' : '6'}}>
                 <Flex direction={"column"} >
-                  {(!iseditable)&&<Heading size={"7"}>{title}</Heading>}
+                  {(!iseditable)&&<Heading size={"5"}>{title}</Heading>}
                   {(iseditable)&&<Input style={{'width':'50rem'}} value={currtitle} disabled={false} onChange={(e)=>setCurrentTitle(e.target.value)} placeholder={plchldr} />}
 
                   <Separator.Root className="SeparatorRoot" style={{ margin: '5px 0px' }} />
@@ -140,11 +143,10 @@ const datetime = "Last Sync: " + currentdate.getDate() + "/"
               
             </div>
               <div className="editor-2">
-              <Card className="editarea">
                 <Editor content={content} title={title}/>           
-              </Card>
+                {/* <RichEditor/> */}
               </div>
-          </div>
+          </Flex>
         </div>        
                                                                                                                                                                                                                                                                                                                                                                                                                                               
         

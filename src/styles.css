@@ -1,12 +1,12 @@
 .contentEditable {
-    height: 300px;
+    /* height: 95vh; */
     width: 100%;
     margin: 1rem;
     padding: 100 8px;
     background-color: gainsboro;
     border: 1px solid #fff;
     border-radius: 4px;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     outline: none;
 }
 @media only screen and (max-width: 600px) { 

@@ -3,7 +3,6 @@ import {$getRoot, $getSelection} from 'lexical';
 import './styles.css';
 import { $isRangeSelection, type TextFormatType } from 'lexical';
 import { $setBlocksType } from '@lexical/selection';
-import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { $createHeadingNode} from '@lexical/rich-text';
 import {
   $isParentElementRTL,
@@ -18,7 +17,7 @@ import {useEffect,useState} from 'react';
 import {LexicalComposer} from '@lexical/react/LexicalComposer';
 import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
 
-
+import { AutoLinkNode, LinkNode } from "@lexical/link";
 import {LexicalEditorRefPlugin} from '@lexical/react/LexicalEditorRefPlugin';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
 import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
@@ -32,7 +31,21 @@ import {  Form, Input, Radio,Layout,message,Switch,Progress,Badge,Avatar,Statist
 import RefreshContentPlugin from '../../Plugins/RefreshContentPlugin';
 import { saveFile } from './FileList';
 import { ToolbarDemo } from './Toolbar';
+import { ListItemNode, ListNode } from "@lexical/list"
+import { CodeHighlightNode, CodeNode } from "@lexical/code";
+import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { setSave } from '../../Utils/Reducers/toSaveContentSlice';
+import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+import CodeHighlightPlugin from './plugins/CodeHighlightPlugin';
+import { ListPlugin } from '@lexical/react/LexicalListPlugin';
+import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
+import { AutoLinkPlugin } from '@lexical/react/LexicalAutoLinkPlugin';
+import ListMaxIndentLevelPlugin from './plugins/ListMaxIndentLevelPlugin';
+import { TRANSFORMERS } from "@lexical/markdown";
+import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
+import TreeViewPlugin from './plugins/TreeViewPlugin';
+import NewToolbarPlugin from './plugins/NewToolBar';
 
 const theme = {
   heading: {
@@ -166,10 +179,23 @@ export function Editor({content,title}) {
   //loading initial config
   const initialConfig = {
     namespace: 'MyEditor',
-    theme,
+
     nodes:[HeadingNode,],
     onError,
-    editorState :content
+    editorState :content,
+    nodes: [
+      HeadingNode,
+      ListNode,
+      ListItemNode,
+      QuoteNode,
+      CodeNode,
+      CodeHighlightNode,
+      TableNode,
+      TableCellNode,
+      TableRowNode,
+      AutoLinkNode,
+      LinkNode
+    ]
   };
 const currentdate = new Date(); 
 const datetime = "Last Sync: " + currentdate.getDate() + "/"
@@ -187,17 +213,28 @@ const plchldr = currentdate.getDate() + "-"
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-           
+           {/* <ToolbarPlugin/> */}
+           <NewToolbarPlugin/>
            <RichTextPlugin 
-           style={{'overflow':'hidden','display':'flex'}}
-          contentEditable={<ContentEditable className='contentEditable'
+                  contentEditable={<ContentEditable className='contentEditable'
             />}
           placeholder={<div>Enter some text...</div>}
           ErrorBoundary={LexicalErrorBoundary}
         />
-
       <HistoryPlugin />
+      <AutoFocusPlugin />
+      <CodeHighlightPlugin />
+      <ListPlugin />
+      <LinkPlugin />
+      {/* <TreeViewPlugin/> */}
+      {/* <AutoLinkPlugin /> */}
+      <ListMaxIndentLevelPlugin maxDepth={7} />
+      {/* <MarkdownShortcutPlugin transformers={TRANSFORMERS} /> */}
+      
+      {/* this custom plugin is used to load data from the file list selection in case if I forgets */}
       <RefreshContentPlugin newState={content} />
+
+      {/* this custom plugin is used to get the data from the editor and we can use it accordingly - like saving it to db  */}
       <OnChangeLivePlugin onChange={onChange}/>
     </LexicalComposer>
   );

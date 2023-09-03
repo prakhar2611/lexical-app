@@ -1,5 +1,8 @@
 @import '@radix-ui/colors/violet.css';
 
+body {
+  overflow: hidden;
+}
 .SeparatorRoot {
   background-color: var(--violet-6);
 }
@@ -15,40 +18,54 @@
 .mainflex {
   height: 70rem;
   flex-direction: column;
-  background-color:darkslategrey;
+  background-color:rgb(99, 128, 196);
   z-index: -1;
+  overflow: hidden;
 }
 
 .topNavBar{
   display: flex;
-  background-color: blueviolet;
-  height: 2.8rem;
-  padding: 1.8px;
-  margin: 2px;
+  background-color: rgb(216, 195, 236);
+  height: 2rem;
+  flex-direction: row;
+  justify-content: space-between;
+ align-items: center;
+ padding: 12px;
+ 
 }
 
 .content {
   display: flex;
+  /* background-color: red; */
   flex-direction: row;
-  height: 70rem;
+  height: 95vh;
 
   /* background-color:black; */
   /* justify-content: flex-start;*/
-  align-items :stretch; 
-  gap: 1.3rem;
+  /* align-items :stretch;  */
+  /* gap: 1.3rem; */
 }
 
 .sideBar{
   display: flex;
   padding: 8px;
+  /* height: 40rem; */
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+
+  /* align-content: flex-end; */
+align-items: flex-end;
+overflow: scroll;
 }
 
 .editor {
   /* background-color: bisque; */
   display: flex;
-  flex: 1;
-
+  flex:1;
+  /* height: 95vh; */
+  /* flex: 1; */
   flex-direction: column;
+  /* height: 0vh; */
   /* flex-direction: column;
   align-items :stretch; */
 }
@@ -66,15 +83,18 @@
 
 .editor-2{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: 50rem;
-  width: auto;
+  width: 75rem;
   padding: 8px;
+  gap: 1.5rem;
+  
 }
 
 
 .editarea{
-  height: 70rem;
+  gap: 1.5rem;
   display: flex;
-  flex-grow: 1;
+  padding: 8px;
+  overflow: scroll;
 }

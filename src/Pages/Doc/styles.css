@@ -1,14 +1,21 @@
 .contentEditable {
-    height: 300px;
+    height: 25rem;
     width: 100%;
-    margin: 1rem;
-    padding: 100 8px;
-    background-color: gainsboro;
-    border: 1px solid #fff;
-    border-radius: 4px;
+    padding: 8px;
+    background-color: rgb(255, 255, 255);
+    /* border: 5px solid rgb(255, 7, 7); */
     overflow-y: scroll;
-    outline: none;
 }
+
+.newContainer {
+    height: 60rem;
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+    overflow-y: scroll;
+}
+
+
+
 @media only screen and (max-width: 600px) { 
     .contentEditable{
         height: 40px;
@@ -93,9 +100,25 @@
     padding: 8px;
 }
 
-
 .editarea{
-    height: 70rem;
-    display: flex;
-    flex-grow: 1;
+  display: flex;
+  padding: 8px;
+  overflow: scroll;
+}
+
+  .editor-container {
+    margin: 20px auto 20px auto;
+    border-radius: 2px;
+    max-width: 600px;
+    color: #000;
+    position: relative;
+    line-height: 20px;
+    font-weight: 400;
+    text-align: left;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
   }
+   
+
+
+

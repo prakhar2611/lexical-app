@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import {AppTest} from './Pages/Doc/App'
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
@@ -12,6 +11,7 @@ import {
 } from "react-router-dom";
 import SignIn from './Pages/Sing-In/SignIn';
 import { CallbackRoute } from './apis/CallBack';
+import {Test} from './Pages/Test'
 
 const router = createBrowserRouter([
   {
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   },
   {
     path : "/docs",
-    element : <App/>
+    element : <AppTest/>
   },
   {
     path : "/auth/callback",
@@ -30,6 +30,10 @@ const router = createBrowserRouter([
   {
     path : "/testdocs",
     element : <AppTest/>
+  },
+  {
+    path : "/test",
+    element : <Test/>
   },
 ]);
 
