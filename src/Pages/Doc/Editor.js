@@ -28,7 +28,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setcontent } from '../../Utils/Reducers/contentSlice';
 import { Button, Card, Flex } from '@radix-ui/themes';
 import {  Form, Input, Radio,Layout,message,Switch,Progress,Badge,Avatar,Statistic} from 'antd';
-import RefreshContentPlugin from '../../Plugins/RefreshContentPlugin';
+import RefreshContentPlugin from './plugins/RefreshContentPlugin';
 import { saveFile } from './FileList';
 import { ToolbarDemo } from './Toolbar';
 import { ListItemNode, ListNode } from "@lexical/list"
@@ -95,6 +95,16 @@ function MyCustomAutoFocusPlugin() {
 
   return null;
 }
+
+// export function makeEditorEditable() {
+//   const [editor] = useLexicalComposerContext();
+
+//   useEffect(() => {
+//     editor.setEditable(true)
+//   }, [editor]);
+
+//   return null;
+// }
 
 
 // Catch any errors that occur during Lexical updates and log them
@@ -179,7 +189,7 @@ export function Editor({content,title}) {
   //loading initial config
   const initialConfig = {
     namespace: 'MyEditor',
-
+    // editable :false,
     nodes:[HeadingNode,],
     onError,
     editorState :content,

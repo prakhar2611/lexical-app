@@ -1,6 +1,9 @@
 import {Redirect,useState,useEffect } from 'react'
 import { useSearchParams, redirect ,useNavigate  } from "react-router-dom";
 import axios from 'axios'
+import { useDispatch } from 'react-redux';
+import { getuserDetails } from './SignIn';
+import { setUser } from '../Utils/Reducers/userSlice';
 
 
 
@@ -11,6 +14,7 @@ export function CallbackRoute() {
     var [tokentype, settokentype] = useState()
     var [res ,setres] = useState(null)
     const navigate  = useNavigate ();
+    const dispatch = useDispatch();
 
     //const [searchParams] = useSearchParams();
     const searchParams = new URLSearchParams(window.location.href)
@@ -28,6 +32,7 @@ export function CallbackRoute() {
         //Expiry : setexpiry,
         token_type : settokentype    
     }
+
 
     //useEffect(() =>{ 
        axios.post('http://localhost:9005/api/User/v1/Signin', JSON.stringify(data),{

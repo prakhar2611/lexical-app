@@ -1,6 +1,6 @@
 import "./App.css"; 
 
-import {Editor} from "./Editor";
+import {Editor, makeEditorEditable, MakeEditorEditable} from "./Editor";
 import { FileList } from "./FileList";
 import { Button, Select, Input, Radio,Layout,message,Switch,Progress,Badge,Avatar,Statistic} from 'antd';
 
@@ -15,6 +15,8 @@ import { getdocs,saveFile } from "../../apis/DocsApi";
 import { EditTwoTone, PlusCircleTwoTone, UserOutlined } from "@ant-design/icons";
 import { setCurrFolder, setNewPage } from "../../Utils/Reducers/pageSlice";
 import { Cross1Icon, CrossCircledIcon } from "@radix-ui/react-icons";
+import { setUser } from "../../Utils/Reducers/userSlice";
+import { getuserDetails } from "../../apis/SignIn";
 
   
 export function AppTest() {
@@ -31,6 +33,7 @@ export function AppTest() {
 
   const [currtitle,setcurrTitle] =useState(title)
   const [currfoldername,setinputFolder] = useState(folder)
+  const[userimage,setuserimage] = useState('')
 
   const [savelabel,setsavelabel] = useState("Save")
   const [onselectedit,setonselectedit] = useState(false)
@@ -102,13 +105,21 @@ const datetime = "Last Sync: " + currentdate.getDate() + "/"
       setonselectedit(false)
       setiseditable(false)  
     }
- 
+
+
+  useEffect(()=>{
+    getuserDetails().then((res) => { setuserimage(res.picture)}).catch(error => console.error(error))
+    },[1])
+
   return (
   <Theme accentColor="orange" grayColor="sand" radius="large" scaling="95%">
       <Flex className="mainflex">  
         <div className="topNavBar">
+          <Flex gap={"3"}>
         <Heading size={"7"}>KNOTS</Heading>
-        <Avatar size={40} icon={<img src=""></img>} />
+        <Avatar size={40} icon={<img src="./knots.jpg"></img>} />
+        </Flex>
+        <Avatar size={40} icon={<img src={userimage}></img>} />
         </div>                  
         <div className="content">
           <Flex className="sideBar">

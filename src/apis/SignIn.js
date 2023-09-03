@@ -1,3 +1,7 @@
+import axios from "axios";
+const token = sessionStorage.getItem('access_token');
+
+
 export function handleLoginClick() {
     var oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
 
@@ -27,3 +31,16 @@ export function handleLoginClick() {
   document.body.appendChild(form);
   form.submit();
   };
+
+
+  export function getuserDetails() {
+    return(
+      axios.get(`http://localhost:9005/api/User/v1/GetUserProfile`,{
+            headers: {           
+                'Content-Type': 'application/json',
+                'token' :  token
+            },        
+        })
+        .then(response => response.data)
+        .catch(error => {return console.error(error)}))
+  }
