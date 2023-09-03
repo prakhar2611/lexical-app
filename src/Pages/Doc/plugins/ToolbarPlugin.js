@@ -50,7 +50,7 @@ import {
   getDefaultCodeLanguage,
   getCodeLanguages
 } from "@lexical/code";
-import { DownOutlined } from '@ant-design/icons';
+import { CodeSandboxCircleFilled, DownOutlined, EditFilled, SaveFilled } from '@ant-design/icons';
 import { Dropdown, message, Space } from 'antd';
 
 const LowPriority = 1;
@@ -827,6 +827,7 @@ export default function ToolbarPlugin() {
     <Toolbar.Button className="ToolbarButton" style={{ marginLeft: 'auto' }}>
       Share
     </Toolbar.Button>
+
   </Toolbar.Root>
 </div>
      );

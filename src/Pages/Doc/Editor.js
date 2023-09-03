@@ -189,7 +189,7 @@ export function Editor({content,title}) {
   //loading initial config
   const initialConfig = {
     namespace: 'MyEditor',
-    // editable :false,
+    editable :false,
     nodes:[HeadingNode,],
     onError,
     editorState :content,
@@ -224,7 +224,7 @@ const plchldr = currentdate.getDate() + "-"
   return (
     <LexicalComposer initialConfig={initialConfig}>
            {/* <ToolbarPlugin/> */}
-           <NewToolbarPlugin/>
+           <NewToolbarPlugin />
            <RichTextPlugin 
                   contentEditable={<ContentEditable className='contentEditable'
             />}
