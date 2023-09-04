@@ -11,6 +11,7 @@ const treeData = [
           title: 'How To Use',
           meta : '',
           isLeaf: true,
+          disable : true
         },
         {
           title: 'About Us',

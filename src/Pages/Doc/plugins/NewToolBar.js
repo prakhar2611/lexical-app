@@ -57,7 +57,6 @@ import {
 import { CodeFilled, CodeSandboxCircleFilled, DownOutlined, EditFilled, EditTwoTone, FieldNumberOutlined, NumberOutlined, SaveFilled, SaveTwoTone, StopTwoTone } from '@ant-design/icons';
 import { Dropdown,Select, message, Space,Modal,Input } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
-import { seteditable, setonselectEditable } from "../../../Utils/Reducers/editorSlice";
 import { Theme,Flex,Container,Box, Card, Heading, Text } from "@radix-ui/themes";
 import * as Separator from '@radix-ui/react-separator';
 import { getdocs, saveFile } from "../../../apis/DocsApi";
@@ -156,36 +155,51 @@ export default function NewToolbarPlugin() {
   const [isStrikethrough, setIsStrikethrough] = useState(false);
   const [isCode, setIsCode] = useState(false);
 
+  const [iseditable,setiseditable] = useState(false)
+  const[activevalue,setactivevalue] = useState([])
+
   function MySmallCurdComponent() {
       //for save and edit playing with store at 3am
       const saveContent = useSelector((state)=>state.tosavecontent.value);
-      const iseditable = useSelector((state) =>state.editor.value.editable)
-      const onselectedit =  useSelector((state) =>state.editor.value.onselectEditable)
+      // const iseditable = useSelector((state) =>state.editor.value.editable)
+      // const onselectedit =  useSelector((state) =>state.editor.value.onselectEditable)
+      // const isModalOpen =  useSelector((state) => state.editor.value.isModalOpen)
+
+      
+
+      // useEffect(() => {
+      // },[state.editor.value.isModalOpen])
+
       const title = useSelector((state)=>state.page.value['title']);
-      const [isModalOpen, setIsModalOpen] = useState(false);
       const folder =  useSelector((state)=>state.page.value['folder']);
       const folderList = useSelector((state)=>state.directory.value.folderList);
 
       const [currfoldername,setinputFolder] = useState(folder)
       const [currtitle,setcurrTitle] =useState(title)
       const [savelabel,setsavelabel] = useState("Save")
+      // const [iseditable,setiseditable] = useState(false)
+      const [onselectedit,setonselectedit] = useState(false)
+      const [isModalOpen, setIsModalOpen] = useState(false);
+
 
 
       const dispatch = useDispatch()
 
       function makeEditable() {
         editor.setEditable(true)
-        dispatch(seteditable(true))
-            setcurrTitle(title)     
+        // dispatch(seteditable(true))
+        setiseditable(true)
+        setcurrTitle(title)     
       }
       function makeUneditable() {
         editor.setEditable(false)
-        dispatch(seteditable(false))
-        dispatch(setonselectEditable(false))
+        setiseditable(false)
+        setonselectedit(false)
       }
 
       function makeFolderEdit(value) {
-        dispatch(setonselectEditable(value))
+        setonselectedit(value)
+
       }
 
       function setCurrentTitle(value) {
@@ -199,47 +213,48 @@ export default function NewToolbarPlugin() {
 
 
       const showModal = () => {
-      setIsModalOpen(true);
-      };
+        setIsModalOpen(true)
+     };
+      
       const handleOk = () => {
       console.log("save content =====> ",  saveContent)
-          //dispatch(setCurrFolder(currfoldername))
           saveFile(saveContent,currtitle,currfoldername)
           getdocs().then(res => {
             dispatch(updatedirectory(res)) 
           }).catch(error => console.error(error))
-          dispatch(setonselectEditable(false))
-          dispatch(seteditable(false))
+          setonselectedit(false)
+          setiseditable(false)
           editor.setEditable(false)
           setIsModalOpen(false);
           message.info(`File Saved !`);
       };
       const handleCancel = () => {
-      setIsModalOpen(false);
+        setIsModalOpen(false)
       };
 
     return ( 
       <div style={{'display' : 'flex', 'flexDirection' : 'row' , 'gap' : '1rem', 'marginLeft' : 'auto', 'padding' : '5px', 'alignItems' : 'center'}}>
-      {(!iseditable)&&<EditTwoTone onClick={() => makeEditable()} />}  
-      {(iseditable)&&<SaveTwoTone  onClick={() => showModal()} />}
-      <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-      <Card style={{'width' :'25rem' ,'display':'flex','flexGrow' : '6'}}>
-                <Flex direction={"column"} >
-                  {(!iseditable)&&<Heading size={"5"}>{title}</Heading>}
-                  {(iseditable)&&<Input style={{'width':'50rem'}} value={currtitle} disabled={false} onChange={(e)=>setCurrentTitle(e.target.value)} placeholder={plchldr} />}
+        {(!iseditable)&&<EditTwoTone onClick={() => makeEditable()} />}  
+        {(iseditable)&&<SaveTwoTone  onClick={() => showModal()} />}
 
-                  <Separator.Root className="SeparatorRoot" style={{ margin: '5px 0px' }} />
-                  <Flex style={{'justifyContent' :'flex-start' ,'gap': '1rem','alignItems':'baseline'}}>            
-                    <Heading size={"2"}>Folder</Heading> 
-                    {(!onselectedit) &&<Select disabled = {!iseditable} value={currfoldername} options={folderList} onSelect={(x) => {setinputFolder(x)}} ></Select>}
-                    {(onselectedit)  &&<Input style={{'width':'30rem'}} value={currfoldername} disabled={false} onChange={(e)=>setinputFolder(e.target.value)} placeholder={plchldr} />}
-                    {(iseditable&&!onselectedit) &&< EditTwoTone label="edit" onClick={(x) => {makeFolderEdit(true)}} > </EditTwoTone> }
-                    {(iseditable&&onselectedit)  &&< Cross1Icon label="edit" onClick={(x) => {makeFolderEdit(false)}} > </Cross1Icon> }
-                  </Flex>
-                </Flex>
-              </Card>
-      </Modal>
-      {(iseditable)&&<StopTwoTone onClick={() => makeUneditable()}/>}
+        <Modal title="Save File" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+          <Flex direction={"column"}  >
+            <Flex style={{'justifyContent' :'flex-start' ,'gap': '1rem','alignItems':'baseline'}}>  
+            <Heading size={"2"}>File</Heading> 
+              {(!iseditable)&&<Heading size={"5"}>{title}</Heading>}
+              {(iseditable)&&<Input style={{'width':'20rem'}} value={currtitle} disabled={false} onChange={(e)=>setCurrentTitle(e.target.value)} placeholder={plchldr} />}
+            </Flex>
+            <Separator.Root className="SeparatorRoot" style={{ margin: '5px 0px' }} />
+            <Flex style={{'justifyContent' :'flex-start' ,'gap': '1rem','alignItems':'baseline'}}>            
+              <Heading size={"2"}>Folder</Heading> 
+              {(!onselectedit) &&<Select disabled = {!iseditable} value={currfoldername} options={folderList} onSelect={(x) => {setinputFolder(x)}} ></Select>}
+              {(onselectedit)  &&<Input style={{'width':'20rem'}} value={currfoldername} disabled={false} onChange={(e)=>setinputFolder(e.target.value)} placeholder={plchldr} />}
+              {(iseditable&&!onselectedit) &&< EditTwoTone label="edit" onClick={(x) => {makeFolderEdit(true)}} > </EditTwoTone> }
+              {(iseditable&&onselectedit)  &&< Cross1Icon label="cancel" onClick={(x) => {makeFolderEdit(false)}} > </Cross1Icon> }
+            </Flex>
+          </Flex>
+        </Modal>
+        {(iseditable)&&<StopTwoTone onClick={() => makeUneditable()}/>}
       </div>
      
     )
@@ -248,8 +263,6 @@ export default function NewToolbarPlugin() {
   
   function CustomDropDown () {
  
-    const iseditable = useSelector((state) =>state.editor.value.editable)
-
     const onClick = ({ key }) => {
       // message.info(`Click on item ${key}`);
       if(key == '1') {
@@ -440,6 +453,21 @@ export default function NewToolbarPlugin() {
       setIsCode(selection.hasFormat("code"));
       setIsRTL($isParentElementRTL(selection));
 
+      const value =[]  
+
+      if(isBold){
+        value.push("bold")
+      }
+      if (isItalic) {
+        value.push("italic")
+      }
+      if (isStrikethrough) {
+        value.push("strikethrough")
+      } 
+
+      setactivevalue(...value)
+
+
       // Update links
       const node = getSelectedNode(selection);
       const parent = node.getParent();
@@ -500,7 +528,6 @@ export default function NewToolbarPlugin() {
     });
   }
     
-  const iseditable  = useSelector((state) =>state.editor.value.editable)
     
     
 
@@ -515,8 +542,8 @@ export default function NewToolbarPlugin() {
   return (
 
   <Toolbar.Root className="ToolbarRoot" aria-label="Formatting options">
-    <Toolbar.ToggleGroup disabled={!iseditable} type="multiple" aria-label="Text formatting">
-      <Toolbar.ToggleItem className="ToolbarToggleItem" value="bold" aria-label="Bold" onClick={()=> {editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold")}}>
+    <Toolbar.ToggleGroup disabled={!iseditable} type="multiple" value={["bold"]} aria-label="Text formatting">
+      <Toolbar.ToggleItem className="ToolbarToggleItem"  value="bold" aria-label="Bold" onClick={()=> {editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold")}}>
         <FontBoldIcon />
       </Toolbar.ToggleItem>
       <Toolbar.ToggleItem className="ToolbarToggleItem" value="italic" aria-label="Italic" onClick={()=> { editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");}}>

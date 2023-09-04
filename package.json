@@ -1,6 +1,6 @@
 {
-  "name": "lexical-rich-text-example",
-  "version": "1.0.0",
+  "name": "knots",
+  "version": "1.5.0",
   "description": "",
   "keywords": [],
   "main": "src/index.js",

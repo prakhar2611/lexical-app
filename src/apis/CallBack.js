@@ -35,7 +35,7 @@ export function CallbackRoute() {
 
 
     //useEffect(() =>{ 
-       axios.post('http://localhost:9005/api/User/v1/Signin', JSON.stringify(data),{
+       axios.post(serverurl+'api/User/v1/Signin', JSON.stringify(data),{
         headers: {
             'Content-Type': 'application/json',
          },
@@ -54,7 +54,7 @@ export function CallbackRoute() {
       //setres(mydata);
     //},[]);
 
-    navigate('/Welcome');
+    navigate('/');
 
     // if(res.data.status){
     //     return redirect("/Welcome");

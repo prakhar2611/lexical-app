@@ -1,18 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const newPage = {
-  'title' : 'Create New File',
-  'folder' : 'Provide Folder Name',
-  'content' : '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Basic Template to follow While Creating File and Folder in the Systemm.","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"this is initial state of editor editor","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"Lets get started","type":"text","version":1},{"type":"linebreak","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
-}
+
 
 export const pageSlice = createSlice({
   name: 'Page',
   initialState: {
     value:{
         'title' : 'Create New File',
-        'folder' : 'Provide Folder Name',
-        'content' : '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Basic Template to follow While Creating File and Folder in the Systemm.","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"this is initial state of editor editor","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"Lets get started","type":"text","version":1},{"type":"linebreak","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        'folder' : '',
+        'content' : '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Knots","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"heading","version":1,"tag":"h1"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"A simple editor with minimal feature to wrap your ideas.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Knots is written upon lexical (meta editor with react support) upon which it has to edit, update, create and view functionality. ","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"User and Create new File by clicking on the ","type":"text","version":1},{"detail":0,"format":1,"mode":"normal","style":"","text":"(+) ","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"on the folder directory. On which It will open a default page to edit. On saving the current editor content (by clicking on save on the right side of the tool bar ), user will be asked to provide file and folder name to save. The page will auto load on save and they will be able to see the file on the directory.","type":"text","version":1},{"type":"linebreak","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"Feel free to use and provide Feedback on : ","type":"text","version":1},{"detail":0,"format":2,"mode":"normal","style":"","text":"teencross@gmail.com","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Thanks !","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
     }},
   reducers: {
     setCurrPage: (state, action) => {

@@ -27,8 +27,6 @@ export function AppTest() {
   const folder =  useSelector((state)=>state.page.value['folder']);
   const saveContent = useSelector((state)=>state.tosavecontent.value);
   const folderList = useSelector((state)=>state.directory.value.folderList);
-  const iseditable = useSelector((state) =>state.editor.value.editable)
-  const onselectedit =  useSelector((state) =>state.editor.value.onselectEditable)
 
   const dispatch = useDispatch()
 
@@ -55,33 +53,16 @@ const datetime = "Last Sync: " + currentdate.getDate() + "/"
   
 
       // on edit button make editable true 
-  function makeEditable() {
-    dispatch(seteditable(true))
-        setcurrTitle(title)     
-  }
-
-  function makeUneditable() {
-         dispatch(seteditable(false))
-         dispatch(setonselectEditable(false))
-  }
-
-  function setCurrentTitle(value) {
-    setcurrTitle(value)
-    if(value != title){
-      setsavelabel("Save As")
-    }else{
-      setsavelabel("Save")
-    }
-  }
+  // function makeEditable() {
+  //   dispatch(seteditable(true))
+  //       setcurrTitle(title)     
+  // }
 
   function setCreateTemplate() {
     dispatch(setNewPage())
-    makeEditable()
+    // makeEditable()
   }
 
-  function makeFolderEdit(value) {
-    dispatch(setonselectEditable(value))
-  }
 
   // function GetFileList()
   // { 
@@ -93,18 +74,6 @@ const datetime = "Last Sync: " + currentdate.getDate() + "/"
   //     <FileList/>
   //   )
   // }
-
-     //save it to db function
-  function onSave() {
-      console.log("save content =====> ",  saveContent)
-      //dispatch(setCurrFolder(currfoldername))
-      saveFile(saveContent,currtitle,currfoldername)
-      getdocs().then(res => {
-        dispatch(updatedirectory(res)) 
-       }).catch(error => console.error(error))
-      setonselectedit(false)
-      setiseditable(false)  
-    }
 
 
   useEffect(()=>{
@@ -129,7 +98,7 @@ const datetime = "Last Sync: " + currentdate.getDate() + "/"
 
         <Flex className="content">
           <Flex className="sideBar">
-          { (!iseditable)&&<PlusCircleTwoTone onClick={setCreateTemplate} /> }
+         <PlusCircleTwoTone onClick={setCreateTemplate} /> 
             <FileList/>
           </Flex>
           
