@@ -15,7 +15,7 @@ export function handleLoginClick() {
 
   // Parameters to pass to OAuth 2.0 endpoint.
   var params = {'client_id': '64464811543-fee5m8plhj94lpv9vgcei91r15189b45.apps.googleusercontent.com',
-                'redirect_uri': 'http://localhost:3000/auth/callback?provider=google',
+                'redirect_uri': 'https://teencross.dev/auth/callback?provider=google',
                 'response_type': 'token',
                 'scope': 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/userinfo.email',
                 'include_granted_scopes': 'true',

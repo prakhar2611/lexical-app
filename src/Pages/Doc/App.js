@@ -117,7 +117,7 @@ const datetime = "Last Sync: " + currentdate.getDate() + "/"
                 }
             }} /> 
             <div id="f2" >
-                <FileList defaultExpand={false}/>
+                <FileList style={{'display' : 'none'}} defaultExpand={false}/>
             </div>
             </div>
 
