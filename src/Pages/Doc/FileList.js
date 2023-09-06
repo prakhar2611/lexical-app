@@ -1,5 +1,7 @@
 
 import React from 'react';
+import "./App.css"; 
+
 import { useState , useEffect} from 'react';
 import axios from 'axios';
 import { ConsoleSqlOutlined, DownOutlined } from '@ant-design/icons';
@@ -24,7 +26,7 @@ const { DirectoryTree } = Tree;
 const serverurl = process.env.REACT_APP_TEST_SERVER_URL
 
 
-export function FileList () {
+export function FileList ({defaultExpand}) {
   
   const directory = useSelector((state) => state.directory.value.tree)
   const currFolder = useSelector((state) => state.page.value["folder"])
@@ -76,10 +78,10 @@ export function FileList () {
   //   treeData={data}
   // />   */}
 
-<DirectoryTree style={{'display' : 'flex','width' : '15rem'}}
+<DirectoryTree className='filelist' 
       multiple
       switcherIcon={<DownOutlined />}
-      defaultExpandAll={true}
+      defaultExpandAll={defaultExpand}
       onSelect={onSelect}
       // onExpand={onExpand}
       treeData={directory}

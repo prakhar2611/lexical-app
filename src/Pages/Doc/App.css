@@ -101,3 +101,106 @@ overflow: scroll;
   padding: 8px;
   overflow: scroll;
 }
+
+.filelist{
+  display: flex;
+  width: 15rem;
+}
+
+.topnav-1 {
+  align-items: center;
+}
+
+
+.mobilecontent{
+  display: none;
+}
+
+@media only screen and (max-width: 600px) { 
+ 
+  .mainflex {
+    height: 70rem;
+    flex-direction: column;
+    background-color:rgb(99, 128, 196);
+    z-index: -1;
+    overflow: hidden;
+    justify-content: flex-start;
+  }
+
+  .topNavBar{
+    display: flex;
+    background-color: rgb(216, 195, 236);
+    height: 2rem;
+    flex-direction: row;
+    justify-content: space-between;
+   align-items: center;
+   padding: 12px;
+   flex-shrink: 2rem;
+  }
+  
+  .sideBar{
+    /* display: flex;
+    flex-direction: column;
+    background-color: brown;
+    height: 70rem;
+    width: 20rem;
+    flex-grow: 4; */
+    display: none;
+  }
+
+  
+  .mobilecontent{
+    display: flex;
+  }
+
+.editor-2{
+    display: flex;
+    flex-direction: column;
+    height: 90rem;
+    width: 25rem;
+    align-items: center;    
+    /* background-color: brown; */
+}
+
+  /* .content {
+    /* display: flex;
+    background-color: red;
+    flex-direction: column;
+   
+      gap: 1.5rem;
+    align-items: center  ;    
+    overflow: scroll; */
+    /* flex-wrap: nowrap; */
+
+    /* background-color:black; */
+    /* justify-content: flex-start;*/
+    /* align-items :stretch;  */
+    /* gap: 1.3rem; */
+  /* } */
+
+   .content {
+    display: flex;
+    /* background-color: red; */
+    flex-direction: column;
+   
+      gap: 1.5rem;
+    align-items: center  ;    
+    overflow: scroll;
+    /* flex-wrap: nowrap; */
+
+    /* background-color:black; */
+    /* justify-content: flex-start;*/
+    /* align-items :stretch;  */
+    /* gap: 1.3rem; */
+   } 
+  
+
+  .topNavBar .topnav-1{
+    display: none;
+  }
+
+  .topNavBar .newSide{
+    display: flex;
+  }
+  
+}

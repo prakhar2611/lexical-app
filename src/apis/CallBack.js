@@ -15,6 +15,8 @@ export function CallbackRoute() {
     var [res ,setres] = useState(null)
     const navigate  = useNavigate ();
     const dispatch = useDispatch();
+    const serverurl = process.env.REACT_APP_SERVER_URL
+
 
     //const [searchParams] = useSearchParams();
     const searchParams = new URLSearchParams(window.location.href)
@@ -43,7 +45,7 @@ export function CallbackRoute() {
       .then(response => {
         console.log(response.data);
         if (response.data.status == true) {
-          navigate('/docs')
+          navigate('/knots')
         }
       })
       .catch(error => {

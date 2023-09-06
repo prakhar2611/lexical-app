@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     element: <SignIn />,
   },
   {
-    path : "/docs",
+    path : "/knots",
     element : <AppTest/>
   },
   {

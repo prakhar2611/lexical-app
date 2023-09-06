@@ -18,16 +18,13 @@
 
 @media only screen and (max-width: 600px) { 
     .contentEditable{
-        height: 40px;
-        width: 100%;
-        margin: 1rem;
-        padding: 100 8px;
-        background-color: gainsboro;
-        border: 1px solid #fff;
-        border-radius: 4px;
-        overflow-y: scroll;
-        outline: none;
+       height: 33.5rem;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    /* border: 5px solid rgb(255, 7, 7); */
+    overflow-y: scroll;
     }    
+    
     .identifiers{
         width: 75;
         justify-content: space-between;

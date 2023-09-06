@@ -4,7 +4,6 @@ import pageReducer  from './Reducers/pageSlice'
 import tosavecontentReducer from './Reducers/toSaveContentSlice'
 import directorySlice from './Reducers/directorySlice'
 import userSlice from './Reducers/userSlice'
-import editorSlice from './Reducers/editorSlice'
 
 
 export default configureStore({
@@ -14,6 +13,5 @@ export default configureStore({
     tosavecontent : tosavecontentReducer,
     directory : directorySlice,
     user : userSlice,
-    editor : editorSlice
   },
 })
