@@ -1,0 +1,94 @@
+.contentEditable {
+    /* height: 95vh; */
+    width: 100%;
+    margin: 1rem;
+    padding: 100 8px;
+    background-color: gainsboro;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    /* overflow-y: scroll; */
+    outline: none;
+}
+@media only screen and (max-width: 600px) { 
+    .contentEditable{
+        height: 40px;
+        width: 100%;
+        margin: 1rem;
+        padding: 100 8px;
+        background-color: gainsboro;
+        border: 1px solid #fff;
+        border-radius: 4px;
+        overflow-y: scroll;
+        outline: none;
+    }    
+    .identifiers{
+        width: 75;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0em 0em 0em 5em;
+    }
+    .date-time-picker{
+        width: 55%;
+        padding: 5em 0em 1em 5em;
+        justify-content: space-between;
+    }  
+}
+
+/* .placeholder {
+    position: absolute;
+    top: 62px;
+    padding-left: 80px;
+    pointer-events: none;
+} */
+
+.toolbar-wrapper {
+    display: flex;
+}
+
+.glyf-editor-bold {
+    font-weight: 600;
+    font-style: italic;
+}
+
+.glyf-editor-italic {
+    font-style: italic;
+}
+
+.glyf-editor-underline {
+    text-decoration: underline;
+}
+
+.glyf-editor-strikethrough {
+    text-decoration: line-through;
+}
+
+.glyf-editor-underlineStrikethrough {
+    text-decoration: underline line-through;
+}
+
+.glyf-editor-h1 {
+    font-size: 48px;
+    font-family:'Courier New', Courier, monospace;
+    
+    /* text-decoration: underline; */
+    font-weight: bold;
+}
+
+.glyf-editor-h2 {
+    font-family:'Times New Roman', Times, serif;
+    font-size: 40px;
+    color: gray;
+    opacity: .1;
+    font-weight: bold;
+}
+
+.glyf-editor-h3 {
+    font-size: 24px;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.glyf-editor-banner {
+    margin: 8px 0;
+    padding: 8px;
+}

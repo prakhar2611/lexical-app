@@ -1,16 +1,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import {AppTest} from './Pages/Doc/App'
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
 import store from './Utils/store'
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import SignIn from './Pages/Sing-In/SignIn';
+import { CallbackRoute } from './apis/CallBack';
+import {Test} from './Pages/Test'
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <SignIn />,
+  },
+  {
+    path : "/knots",
+    element : <AppTest/>
+  },
+  {
+    path : "/auth/callback",
+    element : <CallbackRoute />
+
+  },
+  {
+    path : "/testdocs",
+    element : <AppTest/>
+  },
+  {
+    path : "/test",
+    element : <Test/>
+  },
+]);
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
       <Provider store={store}>
 
-    <App />
+      <RouterProvider router={router} />
     </Provider>
 
   </React.StrictMode>
